@@ -4,6 +4,8 @@
 
 This guide provides an in-depth walkthrough of the process involved in harnessing the capabilities of Xilinx Alveo FPGAs as SmartNICs within the ESnet Framework. Divided into two core sections, the guide outlines the steps required for both development and deployment phases.
 
+---
+
 ### **Development Phase**
 
 The development phase is a critical initial step, encompassing the setup of a conducive environment for crafting, testing, and compiling P4 programs. These programs will eventually be transformed into executable artifacts capable of running on Xilinx Alveo FPGAs.
@@ -26,9 +28,11 @@ Remember, in this illustration, the Vivado installation directory is situated at
 
 The `XILINXD_LICENSE_FILE` environment variable needs proper configuration to facilitate license resolution for the AMD (Xilinx) VitisNetp4 IP core. This can be achieved using a `.flexlmrc` file in the user's home directory or a dedicated BASH script file (like `.bashrc`). Execute the following BASH shell command as an example:
 
-```export XILINXD_LICENSE_FILE=&lt;filename&gt;```
+```export XILINXD_LICENSE_FILE=<filename>```
 
 Once these steps are completed and you have a valid VitisNetworkingP4 license, your environment will be primed for the development of P4 programs tailored for Xilinx Alveo FPGA cards.
+
+---
 
 ### **Deployment Phase**
 
@@ -89,6 +93,8 @@ Install Docker along with the `docker-compose-plugin` and `docker-buildx-plugin`
 **8. Post-Installation Configuration**
 
 Follow the post-installation steps outlined in <a href="https://docs.docker.com/engine/install/linux-postinstall/">Docker's documentation</a> to grant non-privileged users the ability to execute Docker commands and to implement optional configurations.
+
+---
 
 ## **Completion and References**
 
