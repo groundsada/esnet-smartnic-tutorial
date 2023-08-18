@@ -55,10 +55,8 @@ For more information: [ESnet's License](LICENSE_ESNET.md)
 
 Get started with lesson 1: **[Lesson 1: Getting Started](1-lesson1.md)**
 
+---
+
 Happy networking!
 
 ---
-
-This concludes our tutorial on utilizing Xilinx Alveo FPGAs as SmartNICs with the ESnet framework. We hope you found this guide informative and inspiring for your FPGA-accelerated networking projects.
-
--->
