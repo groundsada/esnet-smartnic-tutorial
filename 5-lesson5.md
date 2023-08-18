@@ -6,5 +6,5 @@ Welcome to the tutorial on utilizing Xilinx Alveo FPGAs as SmartNICs within the 
 
 ## Advanced Lesson 6: esnet-smartnic-fw
 
-Get started with lesson 1: **[Lesson 1: Getting Started](1-lesson1.md)**
+Link: **[Advanced Lesson 6: esnet-smartnic-fw](6-lesson6.md)**
 

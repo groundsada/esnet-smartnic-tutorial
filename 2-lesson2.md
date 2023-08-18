@@ -6,5 +6,5 @@ Welcome to the tutorial on utilizing Xilinx Alveo FPGAs as SmartNICs within the 
 
 ## Lesson 3: P4 Simulation
 
-Get started with lesson 1: **[Lesson 1: Getting Started](1-lesson1.md)**
+Link: **[Lesson 3: P4 Simulation](3-lesson3.md)**
 

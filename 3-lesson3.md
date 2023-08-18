@@ -6,5 +6,5 @@ Welcome to the tutorial on utilizing Xilinx Alveo FPGAs as SmartNICs within the 
 
 ## Lesson 4: RTL Simulation
 
-Get started with lesson 1: **[Lesson 1: Getting Started](1-lesson1.md)**
+Link: **[Lesson 4: RTL Simulation](4-lesson4.md)**
 

@@ -8,5 +8,5 @@ Welcome to the tutorial on utilizing Xilinx Alveo FPGAs as SmartNICs within the 
 
 **Please note that from Lesson 5 forward, we cover running compiled P4 program bitfile on FPGAs.**
 
-Get started with lesson 1: **[Lesson 1: Getting Started](1-lesson1.md)**
+Link: **[Advanced Lesson 5: The ESnet Stack](5-lesson5.md)**
 

@@ -6,5 +6,5 @@ Welcome to the tutorial on utilizing Xilinx Alveo FPGAs as SmartNICs within the 
 
 ## Advanced Lesson 7: DPDK
 
-Get started with lesson 1: **[Lesson 1: Getting Started](1-lesson1.md)**
+Link: **[Advanced Lesson 7: DPDK](7-lesson7.md)**
 

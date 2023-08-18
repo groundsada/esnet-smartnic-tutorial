@@ -30,6 +30,8 @@ Please make sure you have the following (if you are taking CS 595 you can ignor 
 - Xilinx Vivado 2023.1
 - A valid VitisNetworkingP4 license
 
+**For operators/administrators:** If you are seeking configuring your system is to is compatible with the ESnet SmartNIC framework, please see: **[Appendix A: Operator's Guide](z-appendix_a.md)**
+
 ## Copyright Notice
 
 ESnet SmartNIC Copyright (c) 2022, The Regents of the University of
