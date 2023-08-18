@@ -9,7 +9,7 @@
 - [Lesson 2: esnet-smartnic-hw](2-lesson2.md)
 - [Lesson 3: P4 Simulation](3-lesson3.md)
 - [Lesson 4: RTL Simulation](4-lesson4.md)
-- [Advanced Lesson 5: The ESnet stack](5-lesson5.md)
+- [Advanced Lesson 5: The ESnet Stack](5-lesson5.md)
 - [Advanced Lesson 6: esnet-smartnic-fw](6-lesson6.md)
 - [Advanced Lesson 7: DPDK](7-lesson7.md)
 - [Appendix A: Operator's Guide](z-appendix_a.md)
