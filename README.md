@@ -55,8 +55,6 @@ For more information: [ESnet's License](LICENSE_ESNET.md)
 
 Get started with lesson 1: **[Lesson 1: Getting Started](1-lesson1.md)**
 
----
-
-Happy networking!
+**Happy networking!**
 
 ---
