@@ -1,0 +1,723 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        
+        
+        
+        <link rel="shortcut icon" href="../img/favicon.ico">
+        <title>esnet-smartnic-fw - esnet-smartnic-tutorial</title>
+        <link href="../css/bootstrap.min.css" rel="stylesheet">
+        <link href="../css/font-awesome.min.css" rel="stylesheet">
+        <link href="../css/base.css" rel="stylesheet">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/atelier-dune-light.min.css">
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
+        <script>hljs.highlightAll();</script> 
+    </head>
+
+    <body>
+        <div class="navbar fixed-top navbar-expand-lg navbar-dark bg-primary">
+            <div class="container">
+                <a class="navbar-brand" href="..">esnet-smartnic-tutorial</a>
+                <!-- Expander button -->
+                <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbar-collapse">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+
+                <!-- Expanded navigation -->
+                <div id="navbar-collapse" class="navbar-collapse collapse">
+                        <!-- Main navigation -->
+                        <ul class="nav navbar-nav">
+                            <li class="navitem">
+                                <a href=".." class="nav-link">Home</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../1-lesson1/" class="nav-link">Getting Started</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../2-lesson2/" class="nav-link">esnet-smartnic-hw</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../3-lesson3/" class="nav-link">P4 Simulation</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../4-lesson4/" class="nav-link">RTL Simulation</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../5-lesson5/" class="nav-link">The ESnet Stack</a>
+                            </li>
+                            <li class="navitem active">
+                                <a href="./" class="nav-link">esnet-smartnic-fw</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../7-lesson7/" class="nav-link">DPDK</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../z-appendix_a/" class="nav-link">Operator's Guide</a>
+                            </li>
+                        </ul>
+
+                    <ul class="nav navbar-nav ml-auto">
+                        <li class="nav-item">
+                            <a href="#" class="nav-link" data-toggle="modal" data-target="#mkdocs_search_modal">
+                                <i class="fa fa-search"></i> Search
+                            </a>
+                        </li>
+                            <li class="nav-item">
+                                <a rel="prev" href="../5-lesson5/" class="nav-link">
+                                    <i class="fa fa-arrow-left"></i> Previous
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a rel="next" href="../7-lesson7/" class="nav-link">
+                                    Next <i class="fa fa-arrow-right"></i>
+                                </a>
+                            </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="container">
+            <div class="row">
+                    <div class="col-md-3"><div class="navbar-light navbar-expand-md bs-sidebar hidden-print affix" role="complementary">
+    <div class="navbar-header">
+        <button type="button" class="navbar-toggler collapsed" data-toggle="collapse" data-target="#toc-collapse" title="Table of Contents">
+            <span class="fa fa-angle-down"></span>
+        </button>
+    </div>
+
+    
+    <div id="toc-collapse" class="navbar-collapse collapse card bg-secondary">
+        <ul class="nav flex-column">
+            
+            <li class="nav-item" data-level="1"><a href="#using-xilinx-alveo-fpgas-as-smartnics-with-esnet-framework" class="nav-link">Using Xilinx Alveo FPGAs as SmartNICs with ESnet Framework</a>
+              <ul class="nav flex-column">
+            <li class="nav-item" data-level="2"><a href="#advanced-lesson-6-esnet-smartnic-fw" class="nav-link">Advanced Lesson 6: esnet-smartnic-fw</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+              </ul>
+            </li>
+            
+            <li class="nav-item" data-level="1"><a href="#building-a-new-firmware-image" class="nav-link">Building a new firmware image</a>
+              <ul class="nav flex-column">
+            <li class="nav-item" data-level="2"><a href="#clone-the-esnet-smartnic-fw-repository" class="nav-link">Clone the esnet-smartnic-fw repository</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-level="2"><a href="#git-submodules" class="nav-link">Git Submodules</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-level="2"><a href="#install-smartnic-hardware-build-artifact" class="nav-link">Install Smartnic Hardware Build Artifact</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-level="2"><a href="#set-up-your-env-file-for-building-a-new-firmware-image" class="nav-link">Set up your .env file for building a new firmware image</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-level="2"><a href="#build-the-firmware" class="nav-link">Build the firmware</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-level="2"><a href="#configuring-the-firmware-runtime-environment" class="nav-link">Configuring the firmware runtime environment</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-level="2"><a href="#converting-from-factory-flash-image-to-esnet-smartnic-flash-image" class="nav-link">Converting from factory flash image to ESnet Smartnic flash image</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+              </ul>
+            </li>
+            
+            <li class="nav-item" data-level="1"><a href="#normal-operation-of-the-runtime-environment" class="nav-link">Normal Operation of the Runtime Environment</a>
+              <ul class="nav flex-column">
+            <li class="nav-item" data-level="2"><a href="#running-the-firmware" class="nav-link">Running the firmware</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-level="2"><a href="#verifying-the-bitfile-download" class="nav-link">Verifying the bitfile download</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-level="2"><a href="#inspecting-registers-and-interacting-with-the-firmware" class="nav-link">Inspecting registers and interacting with the firmware</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-level="2"><a href="#optional-updating-the-flash-image-to-a-new-esnet-smartnic-flash-image" class="nav-link">(OPTIONAL) Updating the flash image to a new ESnet Smartnic flash image</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-level="2"><a href="#optional-remove-the-esnet-smartnic-flash-image-from-the-fpga-card-to-revert-to-factory-image" class="nav-link">(OPTIONAL) Remove the ESnet Smartnic flash image from the FPGA card to revert to factory image</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-level="2"><a href="#using-the-sn-cli-tool" class="nav-link">Using the sn-cli tool</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+              </ul>
+            </li>
+            
+            <li class="nav-item" data-level="1"><a href="#displaying-device-information-with-the-dev-subcommand" class="nav-link">Displaying device information with the "dev" subcommand</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            
+            <li class="nav-item" data-level="1"><a href="#inspecting-and-configuring-the-cmac-100g-interfaces-with-the-cmac-subcommand" class="nav-link">Inspecting and Configuring the CMAC (100G) Interfaces with the "cmac" subcommand</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            
+            <li class="nav-item" data-level="1"><a href="#inspecting-and-configuring-the-pcie-queue-dma-qdma-block-with-the-qdma-subcommand" class="nav-link">Inspecting and Configuring the PCIe Queue DMA (QDMA) block with the "qdma" subcommand</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            
+            <li class="nav-item" data-level="1"><a href="#inspecting-packet-counters-in-the-smartnic-platform-with-the-probe-subcommand" class="nav-link">Inspecting packet counters in the smartnic platform with the "probe" subcommand</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            
+            <li class="nav-item" data-level="1"><a href="#configuring-the-smartnic-platform-ingressegressbypass-switch-port-remapping-functions-with-the-sw-subcommand" class="nav-link">Configuring the smartnic platform ingress/egress/bypass switch port remapping functions with the "sw" subcommand</a>
+              <ul class="nav flex-column">
+            <li class="nav-item" data-level="2"><a href="#display-the-current-configuration-status" class="nav-link">Display the current configuration status</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-level="2"><a href="#remaprename-physical-input-ports-to-logical-input-ports" class="nav-link">Remap/rename physical input ports to logical input ports</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-level="2"><a href="#attach-logical-input-ports-to-pipelines" class="nav-link">Attach logical input ports to pipelines</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-level="2"><a href="#connect-input-ports-to-output-ports-in-the-bypass-path" class="nav-link">Connect input ports to output ports in the bypass path</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-level="2"><a href="#override-user-application-output-port-decisions-and-redirect-to-an-alternate-port" class="nav-link">Override user application output port decisions and redirect to an alternate port</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-level="2"><a href="#using-the-sn-p4-cli-tool" class="nav-link">Using the sn-p4-cli tool</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+              </ul>
+            </li>
+            
+            <li class="nav-item" data-level="1"><a href="#inspecting-the-pipeline-structure-with-the-info-subcommand" class="nav-link">Inspecting the pipeline structure with the "info" subcommand</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            
+            <li class="nav-item" data-level="1"><a href="#inserting-a-new-rule-into-a-table" class="nav-link">Inserting a new rule into a table</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            
+            <li class="nav-item" data-level="1"><a href="#updating-an-existing-rule-within-a-table" class="nav-link">Updating an existing rule within a table</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            
+            <li class="nav-item" data-level="1"><a href="#removing-previously-inserted-rules" class="nav-link">Removing previously inserted rules</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            
+            <li class="nav-item" data-level="1"><a href="#bulk-changes-of-rules-using-a-p4bm-simulator-rules-file" class="nav-link">Bulk changes of rules using a p4bm simulator rules file</a>
+              <ul class="nav flex-column">
+            <li class="nav-item" data-level="2"><a href="#stopping-the-runtime-environment" class="nav-link">Stopping the runtime environment</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+              </ul>
+            </li>
+            
+            <li class="nav-item" data-level="1"><a href="#using-the-smartnic-dpdk-container" class="nav-link">Using the smartnic-dpdk container</a>
+              <ul class="nav flex-column">
+            <li class="nav-item" data-level="2"><a href="#advanced-lesson-7-dpdk" class="nav-link">Advanced Lesson 7: DPDK</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+              </ul>
+            </li>
+        </ul>
+    </div>
+</div></div>
+                    <div class="col-md-9" role="main">
+
+<h1 id="using-xilinx-alveo-fpgas-as-smartnics-with-esnet-framework">Using Xilinx Alveo FPGAs as SmartNICs with ESnet Framework</h1>
+<h2 id="advanced-lesson-6-esnet-smartnic-fw">Advanced Lesson 6: esnet-smartnic-fw</h2>
+<p>In this lesson, you will learn how to build the third and last component of the ESnet stack.</p>
+<h1 id="building-a-new-firmware-image">Building a new firmware image</h1>
+<h2 id="clone-the-esnet-smartnic-fw-repository">Clone the esnet-smartnic-fw repository</h2>
+<p><code>git clone https://github.com/esnet/esnet-smartnic-fw.git</code></p>
+<h2 id="git-submodules">Git Submodules</h2>
+<p>Ensure that all submodules have been pulled.</p>
+<pre><code>git submodule init
+git submodule update
+</code></pre>
+<h2 id="install-smartnic-hardware-build-artifact">Install Smartnic Hardware Build Artifact</h2>
+<p>The firmware build depends on the result of a smartnic hardware (FPGA) build.  This file must be available prior to invoking the firmware build.</p>
+<p>This file will be called <code>artifacts.&lt;board&gt;.&lt;app_name&gt;.0.zip</code> and should be placed in the <code>sn-hw</code> directory in your source tree before starting the firmware build.</p>
+<h2 id="set-up-your-env-file-for-building-a-new-firmware-image">Set up your .env file for building a new firmware image</h2>
+<p>The <code>.env</code> file tells the build about its inputs and outputs.</p>
+<p>There is an <code>example.env</code> file in top level directory of this repo that will provide documentation and examples for the values you need to set.</p>
+<pre><code>cd $(git rev-parse --show-toplevel)
+cp example.env .env
+</code></pre>
+<p>Since the values in the .env file are used to locate the correct hardware artifact, you will need to (at least) set these values in the <code>.env</code> file to match the exact naming of the .zip file you installed in the previous step:</p>
+<pre><code>SN_HW_BOARD=&lt;board&gt;
+SN_HW_APP_NAME=&lt;app_name&gt;
+SN_HW_VER=0
+</code></pre>
+<h2 id="build-the-firmware">Build the firmware</h2>
+<p>The firmware build creates a docker container with everything needed to interact with your FPGA image.  Without any parameters, the newly built firmware container will be named/tagged <code>esnet-smartnic-fw:${USER}-dev</code> and will be available only on the local system.</p>
+<pre><code>cd $(git rev-parse --show-toplevel)
+./build.sh
+</code></pre>
+<p><strong>Optionally</strong> you can use any alternative name by specifying the full container URI as an optional parameter to the build script like this.  Using a fully specified URI here can be useful if you are planning to push the newly built container to a remote docker registry.</p>
+<pre><code>./build.sh wharf.es.net/ht/esnet-smartnic-fw:${USER}-dev
+</code></pre>
+<p>The build script also automatically customizes the <code>sn-stack/.env</code> file to refer exactly to the firmware image that you just built.</p>
+<p>The entire <code>sn-stack</code> directory will need to be transferred to the runtime system.</p>
+<pre><code>cd $(git rev-parse --show-toplevel)
+zip -r artifacts.esnet-smartnic-fw.package.0.zip sn-stack
+</code></pre>
+<h2 id="configuring-the-firmware-runtime-environment">Configuring the firmware runtime environment</h2>
+<p>The firmware artifact produced by the build (see README.md at the top of this repo) should be transferred to the runtime system that hosts an FPGA card.</p>
+<pre><code>unzip artifacts.esnet-smartnic-fw.package.0.zip
+cd sn-stack
+# edit the .env file to provide sane values for
+#    FPGA_PCIE_DEV=0000:d8:00
+#    COMPOSE_PROFILES=smartnic-mgr-vfio-unlock
+# and IFF you have more than one JTAG you also need a line like this
+#    HW_TARGET_SERIAL=21760204S029A
+</code></pre>
+<p>Verify that the stack configuration is valid</p>
+<pre><code>docker compose config --quiet &amp;&amp; echo &quot;All good!&quot;
+</code></pre>
+<p>If this prints anything other than "All good!" then your <code>.env</code> configuration file has errors.  Do not proceed until this step passes.</p>
+<h2 id="converting-from-factory-flash-image-to-esnet-smartnic-flash-image">Converting from factory flash image to ESnet Smartnic flash image</h2>
+<p>From the factory, the FPGA cards have only a "gold" bitfile in flash with the "user" partition of flash being blank.  The "gold" bitfile has a narrow PCIe memory window for BAR1 and BAR2 which is insufficient for the ESnet Smartnic platform.  Fixing this requires a one-time flash programming step to install an ESnet Smartnic bitfile into the FPGA "user" partition in flash.  This initial setup is done using the JTAG.</p>
+<p>Ensure that any running <code>sn-stack</code> instances have been stopped so that they don't interfere with the flash programming operation.</p>
+<pre><code>docker compose down -v --remove-orphans
+</code></pre>
+<p>Start the flash rescue service to program an ESnet Smartnic bitfile into the FPGA card "user" partition using the JTAG interface.  This takes approximately 20 minutes.  This process should not be interrupted.</p>
+<pre><code>docker compose --profile smartnic-flash run --rm smartnic-flash-rescue
+</code></pre>
+<p>This will:
+* Use JTAG to write a small flash-programing helper bitfile into the FPGA
+* Use JTAG to write the current version of the bitfile into the FPGA card's "user" partition in flash
+  * Only the "user" partition of the flash is overwritten by this step
+  * The "gold" partition is left untouched</p>
+<p>Clean up by bringing down the running stack after flash writing has completed.</p>
+<pre><code>docker compose down -v --remove-orphans
+</code></pre>
+<p><strong>Perform a cold-boot (power cycle) of the server hosting the FPGA card</strong></p>
+<p>It is essential that this is a proper power cycle and not simply a warm reboot.  Specifically <strong>do not</strong> use <code>shutdown -r now</code> but rather use something like <code>ipmitool chassis power cycle</code>.  Failure to perform a cold-boot here will result in an unusable card.</p>
+<h1 id="normal-operation-of-the-runtime-environment">Normal Operation of the Runtime Environment</h1>
+<p><strong>NOTE</strong> the steps in this major section are only expected to work once you've completed the initial setup in "One-time Setup of the Runtime Environment".</p>
+<h2 id="running-the-firmware">Running the firmware</h2>
+<p>Start up the full firmware docker stack like this</p>
+<pre><code>docker compose up -d
+</code></pre>
+<h2 id="verifying-the-bitfile-download">Verifying the bitfile download</h2>
+<pre><code>docker compose logs smartnic-hw
+</code></pre>
+<h2 id="inspecting-registers-and-interacting-with-the-firmware">Inspecting registers and interacting with the firmware</h2>
+<p>The firmware runtime environment exists inside of the <code>smartnic-fw</code> container.  Here, we exec a shell inside of that container and have a look around.</p>
+<pre><code>docker compose exec smartnic-fw bash
+sn-cli dev version
+regio syscfg
+</code></pre>
+<h2 id="optional-updating-the-flash-image-to-a-new-esnet-smartnic-flash-image">(OPTIONAL) Updating the flash image to a new ESnet Smartnic flash image</h2>
+<p>The instructions in this section are used to <strong>update</strong> the Smartnic flash image <strong>from an already working</strong> Smartnic environment.  This update step is <em>optional</em> and only required if you want to change the contents of the FPGA card flash.  Normally, the "RAM" of the FPGA is loaded using JTAG during stack startup.</p>
+<p><strong>NOTE</strong> This will not work for the very first time ever programming the flash.  See "Converting from factory flash image to ESnet Smartnic flash image" section above for first-time setup.</p>
+<p>Start up a any properly configured stack which will allow us to write the flash using a fast algorithm over PCIe.</p>
+<pre><code>docker compose up -d
+</code></pre>
+<p>Confirm that PCIe register IO is working in your stack by querying the version registers.</p>
+<pre><code>docker compose exec smartnic-fw sn-cli dev version
+</code></pre>
+<p>Confirm that the "DNA" register is <strong>not</strong> showing 0xfffff... as its contents.</p>
+<p>Start the flash update service to write the currently active FPGA bitfile into the persistent flash on the FPGA card.  This takes approximately 7-8 minutes. This process should not be interrupted.</p>
+<pre><code>docker compose --profile smartnic-flash run --rm smartnic-flash-update
+</code></pre>
+<p>Bring down the running stack after flash writing has completed.</p>
+<pre><code>docker compose down -v --remove-orphans
+</code></pre>
+<h2 id="optional-remove-the-esnet-smartnic-flash-image-from-the-fpga-card-to-revert-to-factory-image">(OPTIONAL) Remove the ESnet Smartnic flash image from the FPGA card to revert to factory image</h2>
+<p>The instructions in this section are used to <strong>remove</strong> the Smartnic flash image <strong>from an already working</strong> Smartnic environment.  This removal step is <em>optional</em> and only required if you want to reset the contents of the FPGA card flash back to the factory bitfile.  If you want to keep using the card as an ESnet Smartnic, <strong>do not</strong> perform these operations or you'll have to re-do the  "Converting from factory flash image to ESnet Smartnic flash image" section above.</p>
+<p>Start up a any properly configured stack which will allow us to write the flash using a fast algorithm over PCIe.</p>
+<pre><code>docker compose up -d
+</code></pre>
+<p>Confirm that PCIe register IO is working in your stack by querying the version registers.</p>
+<pre><code>docker compose exec smartnic-fw sn-cli dev version
+</code></pre>
+<p>Confirm that the "DNA" register is <strong>not</strong> showing 0xfffff... as its contents.</p>
+<p>Start the flash remove service to erase the ESnet Smartnic image from the "user" partition of the FPGA card flash.  This takes less than 1 minute. This process should not be interrupted.</p>
+<pre><code>docker compose --profile smartnic-flash run --rm smartnic-flash-remove
+</code></pre>
+<p>Bring down the running stack after flash reset is completed.</p>
+<pre><code>docker compose down -v --remove-orphans
+</code></pre>
+<h2 id="using-the-sn-cli-tool">Using the sn-cli tool</h2>
+<p>The sn-cli tool provides subcommands to help you accomplish many common tasks for inspecting and configuring the smartnic platform components.</p>
+<p>All commands described below are expected to be executed within the <code>smartnic-fw</code> container environment.  Use this command to enter the appropriate environment.</p>
+<pre><code>docker compose exec smartnic-fw bash
+</code></pre>
+<p>The <code>sn-cli</code> tool will automatically look for an environment variable called <code>SN_CLI_SLOTADDR</code> which can be set to the PCIe BDF address of the device that you would like to interract with.  In the <code>smartnic-fw</code> container, this value will already be set for you.</p>
+<h1 id="displaying-device-information-with-the-dev-subcommand">Displaying device information with the "dev" subcommand</h1>
+<p>This will show information about the device such as the build version, build date/time and temperature.</p>
+<pre><code>root@smartnic-fw:/# sn-cli dev version
+Device Version Info
+    DNA:           0x40020000012306a21c10c285
+    USR_ACCESS:    0x000086d3 (34515)
+    BUILD_STATUS:  0x04130920
+
+root@smartnic-fw:/# sn-cli dev temp
+Temperature Monitors
+    FPGA SLR0:    45.551 (deg C)
+</code></pre>
+<p>The <code>USR_ACCESS</code> value is typically the unique build pipeline number that produced the embedded FPGA bitfile.
+The <code>BUILD_STATUS</code> value holds an encoded date/time (Aug 30 at 05:32am) which is when the embedded FPGA bitfile build was started.
+The <code>DNA</code> value holds the factory programmed unique ID of the FPGA</p>
+<h1 id="inspecting-and-configuring-the-cmac-100g-interfaces-with-the-cmac-subcommand">Inspecting and Configuring the CMAC (100G) Interfaces with the "cmac" subcommand</h1>
+<p>Enable/Disable one or more (or all by default) 100G MAC interfaces using these commands:</p>
+<pre><code>sn-cli cmac enable
+sn-cli cmac disable
+
+sn-cli cmac -p 0 enable
+sn-cli cmac -p 1 disable
+</code></pre>
+<p>Enabling a CMAC interface allows frames to pass (Rx/Tx) at the MAC layer.  These commands <strong>do not affect</strong> whether the underlying physical layer (PHY) is operational.</p>
+<p>Display the current MAC and PHY status of one or more (or all by default) 100G MAC interfaces using these commands:</p>
+<pre><code>root@smartnic-fw:/# sn-cli cmac status
+CMAC0
+  Tx (MAC ENABLED/PHY UP)
+  Rx (MAC ENABLED/PHY UP)
+
+CMAC1
+  Tx (MAC ENABLED/PHY UP)
+  Rx (MAC ENABLED/PHY DOWN)
+</code></pre>
+<p>In the example output above, CMAC0 PHY layer is <strong>UP</strong> in both the Tx and Rx directions.  The MAC is fully enabled.  This link is operational and should be passing packets normally.</p>
+<p>In the example output above, CMAC1 PHY layer is <strong>DOWN</strong> in the Rx (receive) direction.  Possible causes for this are:
+* No QSFP28 plugged into 100G port 0 the U280 card
+* Wrong type of QSFP28 module plugged into 100G port 0
+  * 100G QSFP28 SR4 or LR4 modules are supported
+  * Some 100G AOC or DACs are known to work
+  * QSFP+ 40G modules <strong>are not supported</strong>
+  * QSFP 5G modules <strong>are not supported</strong>
+* QSFP28 card improperly seated in the U280 card
+  * Check if the QSFP28 module is inserted upside down and physically blocked from being fully inserted
+  * Unplug/replug the module, ensuring that it is properly oriented and firmly seated
+* Fiber not properly inserted
+  * Unplug/replug the fiber connection at each end
+* Far end is operating in 4x25G or 2x50G split mode
+  * The smartnic platform <strong>does not support</strong> 4x25G or 2x50G mode
+  * Only 100G mode is supported on each of the U280 100G interfaces
+  * Configure far end in 100G mode
+* Far end has RS-FEC (Reed-Solomon Forward Error Correction) enabled
+  * The smartnic platform <strong>does not support</strong> RS-FEC
+  * Disable RS-FEC on the far end equipment</p>
+<p>A more detailed status can also be displayed using the <code>--verbose</code> option.  Note that the <code>--verbose</code> option is a global option and thus must be positioned <strong>before</strong> the <code>cmac</code> subcommand.</p>
+<pre><code>root@smartnic-fw:/# sn-cli --verbose cmac -p 1 status
+CMAC1
+  Tx (MAC ENABLED/PHY UP)
+               tx_local_fault 0
+  Rx (MAC ENABLED/PHY DOWN)
+             rx_got_signal_os 0
+                   rx_bad_sfd 0
+              rx_bad_preamble 0
+     rx_test_pattern_mismatch 0
+      rx_received_local_fault 0
+      rx_internal_local_fault 1
+               rx_local_fault 1
+              rx_remote_fault 0
+                    rx_hi_ber 0
+               rx_aligned_err 0
+                rx_misaligned 0
+                   rx_aligned 0
+                    rx_status 0
+</code></pre>
+<p>Display summary statistics for packets Rx'd and Tx'd from CMAC ports</p>
+<pre><code>root@smartnic-fw:/# sn-cli cmac stats
+CMAC0: TX      0 RX      0 RX-DISC      0 RX-ERR      0
+CMAC1: TX      0 RX      0 RX-DISC      0 RX-ERR      0
+</code></pre>
+<p>Note: The CMAC counters are only cleared/reset when the FPGA is reprogrammed.</p>
+<h1 id="inspecting-and-configuring-the-pcie-queue-dma-qdma-block-with-the-qdma-subcommand">Inspecting and Configuring the PCIe Queue DMA (QDMA) block with the "qdma" subcommand</h1>
+<p>The QDMA block is responsible for managing all DMA queues used for transferring packets and/or events bidirectionally between the U280 card and the Host CPU over the PCIe bus.  In order for any DMA transfers to be allowed on either of the PCIe Physical Functions (PF), an appropriate number of DMA Queue IDs must be provisioned.  This can be done using the <code>qdma</code> subcommand.</p>
+<p>Configure the number of queues allocated to each of the PCIe Physical Functions</p>
+<pre><code>sn-cli qdma setqs 1 1
+</code></pre>
+<p>This assigns 1 QID to PF0 and 1 QIDs to PF1.  The <code>setqs</code> subcommand also takes care of configuring the RSS entropy -&gt; QID map with an equal weighted distribution of all allocated queues.  If you're unsure of how many QIDs to allocate, using <code>1 1</code> here is your best choice.</p>
+<p>Inspect the configuration of the QDMA block</p>
+<pre><code>sn-cli qdma status
+</code></pre>
+<p>Packet, byte and error counters are tracked for packets heading between the QDMA engine and the user application.  You can display them with this command:</p>
+<pre><code>sn-cli qdma stats
+</code></pre>
+<p>Refer to the <code>open-nic-shell</code> documentation for an explanation of exactly where in the FPGA design these statistics are measured.</p>
+<h1 id="inspecting-packet-counters-in-the-smartnic-platform-with-the-probe-subcommand">Inspecting packet counters in the smartnic platform with the "probe" subcommand</h1>
+<p>The smartnic platform implements monitoring points in the datapath at various locations.  You an inspect these counters using this command:</p>
+<pre><code>sn-cli probe stats
+</code></pre>
+<p>Refer to the <code>esnet-smartnic-hw</code> documentation for an explanation of exactly where in the FPGA design these statistics are measured.</p>
+<h1 id="configuring-the-smartnic-platform-ingressegressbypass-switch-port-remapping-functions-with-the-sw-subcommand">Configuring the smartnic platform ingress/egress/bypass switch port remapping functions with the "sw" subcommand</h1>
+<p>The smartnic platform implements reconfigurable ingress and egress port remapping, connections and redirecting.  You can inspect and modify these configuration points using the "sw" subcommand.</p>
+<p>Most of the <code>sw</code> subcommands take one or more port bindings as parameters.  The port bindings are of the form:</p>
+<pre><code>&lt;port&gt;:&lt;port-connector&gt;
+</code></pre>
+<p>Where:
+* <code>&lt;port&gt;</code> is one of
+  * cmac0  -- 100G port 0
+  * cmac1  -- 100G port 1
+  * host0  -- DMA over PCIe Physical Function 0 (PF0)
+  * host1  -- DMA over PCIe Physical Function 1 (PF1)
+* <code>&lt;port-connector&gt;</code> is context dependent and is one of
+  * cmac0
+  * cmac1
+  * host0
+  * host1
+  * bypass -- a high bandwidth channel through the smartnic which does <strong>NOT</strong> pass through the user's application
+  * app0   -- user application port 0 (typically a p4 program ingress)
+  * app1   -- user application port 1 (only available when user implements it in verilog)
+  * drop   -- infinite blackhole that discards all packets sent to it</p>
+<h2 id="display-the-current-configuration-status">Display the current configuration status</h2>
+<pre><code>sn-cli sw status
+</code></pre>
+<h2 id="remaprename-physical-input-ports-to-logical-input-ports">Remap/rename physical input ports to logical input ports</h2>
+<p>The <code>in-port-rename</code> subcommand allows you to remap the identity of a smartnic platform physical ingress port to any logical port as seen by the user logic.  Once remapped (eg. from <code>a</code>-&gt;<code>b</code>), all following logic in the smartnic will perceive that the packet arrived on ingress port <code>b</code> even though it physically arrived on port <code>a</code>.  This can be useful for test injection scenarios but would typically be set to a straight-through mapping in production.</p>
+<pre><code>sn-cli sw in-port-rename a:b
+</code></pre>
+<p>To reset this mapping so each port maps to its usual identity:</p>
+<pre><code>sn-cli sw in-port-rename cmac0:cmac0 cmac1:cmac1 host0:host0 host1:host1
+</code></pre>
+<h2 id="attach-logical-input-ports-to-pipelines">Attach logical input ports to pipelines</h2>
+<p>The <code>in-port-connect</code> subcommand allows you to connect a logical input port to different processing pipelines within the smartnic.  This can be used to connect to a p4 program or to custom logic within the user application.  It can also be used to shunt all packets to a blackhole or to bypass packets around the user application entirely.</p>
+<pre><code>sn-cli sw in-port-connect cmac0:app0 cmac1:app0 host0:bypass host1:bypass
+</code></pre>
+<h2 id="connect-input-ports-to-output-ports-in-the-bypass-path">Connect input ports to output ports in the bypass path</h2>
+<p>The <code>bypass-connect</code> subcommand allows you to connect input ports directly to output ports as they pass through the bypass path (ie. not through the user application).  This is useful for providing direct connectivity from host PCIe PFs to 100G CMAC interfaces for network testing.</p>
+<pre><code>sn-cli sw bypass-connect host0:cmac0 host1:cmac1 cmac0:host0 cmac1:host1
+</code></pre>
+<p><strong>NOTE</strong> any packets that follow the bypass path will not be processed by the user's p4 program</p>
+<h2 id="override-user-application-output-port-decisions-and-redirect-to-an-alternate-port">Override user application output port decisions and redirect to an alternate port</h2>
+<p>The <code>app0-port-redirect</code> and <code>app1-port-redirect</code> subcommands allow the user to override the forwarding decisions made by the user application and/or p4 program and redirect any given output port to a different output port.  This can be useful during development/debugging and in test fixtures.</p>
+<p><strong>NOTE</strong> there are separate overrides for the app0 outputs and the app1 outputs.</p>
+<pre><code>sn-cli sw app0-port-redirect cmac0:host0 cmac1:host1
+sn-cli sw app1-port-redirect cmac0:host0 cmac1:host1
+</code></pre>
+<p>To reset this mapping so each output ports maps to its usual destination:</p>
+<pre><code>sn-cli sw app0-port-redirect cmac0:cmac0 cmac1:cmac1 host0:host0 host1:host1
+sn-cli sw app1-port-redirect cmac0:cmac0 cmac1:cmac1 host0:host0 host1:host1
+</code></pre>
+<h2 id="using-the-sn-p4-cli-tool">Using the sn-p4-cli tool</h2>
+<p>The user's p4 application embedded within the smartnic design may have configurable lookup tables which are used during the wire-speed execution of the packet processing pipeline.  The sn-p4-cli tool provides subcommands to help you to manage the rules in all of the lookup tables defined in your p4 program.</p>
+<p>All commands described below are expected to be executed within the <code>smartnic-fw</code> container environment.  Use this command to enter the appropriate environment.</p>
+<pre><code>docker compose exec smartnic-fw bash
+</code></pre>
+<p>The <code>sn-p4-cli</code> tool will automatically look for an environment variable called <code>SN_P4_CLI_SERVER</code> which can be set to the hostname of the <code>sn-p4-agent</code> that will perform all of the requested actions on the real hardware.  In the <code>smartnic-fw</code> container, this value will already be set for you.</p>
+<h1 id="inspecting-the-pipeline-structure-with-the-info-subcommand">Inspecting the pipeline structure with the "info" subcommand</h1>
+<p>The <code>info</code> subcommand is used to display the pipeline structure, including table names, match fields (and their types), action names and the list of parameters for each action.  This information can be used to formulate new rule definitions for the other subcommands.</p>
+<pre><code>sn-p4-cli info
+</code></pre>
+<h1 id="inserting-a-new-rule-into-a-table">Inserting a new rule into a table</h1>
+<p>The <code>table-insert</code> subcommand allows you to insert a new rule into a specified table.</p>
+<pre><code>sn-p4-cli table-insert &lt;table-name&gt; &lt;action-name&gt; --match &lt;match-expr&gt; [--param &lt;param-expr&gt;] [--priority &lt;prio-val&gt;]
+</code></pre>
+<p>Where:
+* <code>&lt;table-name&gt;</code> is the name of the table to be operated on
+* <code>&lt;action-name&gt;</code> is the action that you would like to activate when this rule matches
+* <code>&lt;match-expr&gt;</code> is one or more match expressions which collectively define when this rule should match a given packet
+  * The number and type of the match fields depends on the p4 definition of the table
+  * The <code>--match</code> option may be specified multiple times and all <code>match-expr</code>s will be concatenated
+* <code>&lt;param-expr&gt;</code> is one or more parameter values which will be returned as a result when this rule matches a given packet
+  * The number and type of the action parameters depends on the p4 definition of the action within the table
+  * Some actions require zero parameters.  In this case, omit the optional <code>--param</code> option entirely.
+* <code>&lt;prio-val&gt;</code> is the priority to be used to resolve scenarios where multiple matches could occur
+  * The <code>--priority</code> option is <em>required</em> for tables with CAM/TCAM type matches (prefix/range/ternary)
+  * The <code>--priority</code> option is <em>prohibited</em> for tables without CAM/TCAM type mathes</p>
+<p><strong>NOTE</strong>: You can find details about your pipeline structure and valid names by running the <code>info</code> subcommand.</p>
+<h1 id="updating-an-existing-rule-within-a-table">Updating an existing rule within a table</h1>
+<p>The <code>table-update</code> subcommand allows you to update the action and parameters for an existing rule within a table</p>
+<pre><code>sn-p4-cli table-update &lt;table-name&gt; &lt;new-action-name&gt; --match &lt;match-expr&gt; [--param &lt;new-param-expr&gt;]
+</code></pre>
+<p>Where:
+* <code>&lt;table-name&gt;</code> is the table containing the rule to be updated
+* <code>&lt;new-action-name&gt;</code> is the new action that should be applied when this rule matches
+* <code>&lt;match-expr&gt;</code> is the exact original <code>&lt;match-expr&gt;</code> used when the original rule was inserted
+* <code>&lt;new-param-expr&gt;</code> is the set of new parameters to be returned when this rule matches
+  * <strong>NOTE</strong>: the new parameters must be consistent with the new action</p>
+<h1 id="removing-previously-inserted-rules">Removing previously inserted rules</h1>
+<p>The <code>clear-all</code> and <code>table-clear</code> and <code>table-delete</code> subcommands allow you to remove rules from tables with varying precision.</p>
+<p>Clear all rules from <em>all tables</em> in the pipeline.</p>
+<pre><code>sn-p4-cli clear-all`
+</code></pre>
+<p>Clear all rules from a <em>single</em> specified table.</p>
+<pre><code>sn-p4-cli table-clear &lt;table-name&gt;
+</code></pre>
+<p>Remove a specific rule from a specific table.</p>
+<pre><code>table-delete &lt;table-name&gt; --match &lt;match-expr&gt;
+</code></pre>
+<h1 id="bulk-changes-of-rules-using-a-p4bm-simulator-rules-file">Bulk changes of rules using a p4bm simulator rules file</h1>
+<p>Using the the <code>p4bm-apply</code> subcommand, a list of pipeline modifications can be applied from a file.  A subset of the full p4bm simulator file format is supported by the <code>sn-p4-cli</code> command.</p>
+<pre><code>sn-p4-cli p4bm-apply &lt;filename&gt;
+</code></pre>
+<p>Supported actions within the p4bm file are:
+* <code>table_insert &lt;table-name&gt; &lt;action-name&gt; &lt;match-expr&gt; =&gt; &lt;param-expr&gt; [priority]</code>
+  * Insert a rule
+* <code>clear_all</code>
+  * Clear all rules from all tables
+* <code>table_clear &lt;table-name&gt;</code>
+  * Clear all rules from a specified table</p>
+<p>All comment characters <code>#</code> and text following them up to the end of the line are ignored.</p>
+<h2 id="stopping-the-runtime-environment">Stopping the runtime environment</h2>
+<p>When we're finished using the smartnic runtime environment, we can stop and remove our docker containers.</p>
+<pre><code>docker compose down -v
+</code></pre>
+<h1 id="using-the-smartnic-dpdk-container">Using the smartnic-dpdk container</h1>
+<p>The <code>sn-stack</code> environment can be started in a mode where the FPGA can be controlled by a DPDK application.  Running in this mode requires a few carefully ordered steps.</p>
+<p>Broadly speaking, the steps required to bring up a DPDK application are as follows:
+* Bind the <code>vfio-pci</code> kernel driver to each FPGA PCIe physical function (PF)
+  * This is handled automatically by the sn-stack.
+* Run a DPDK application with appropriate DPDK Environment Abstraction Layer (EAL) settings
+  * Use <code>-a $SN_PCIE_DEV.0</code> to allow control of one or more specific FPGA PCIe PFs
+  * Use <code>-d librte_net_qdma.so</code> to dynamically link the correct Userspace Polled-Mode Driver (PMD) for the smartnic QDMA engine
+  * The EAL will
+    * Open the PCIe PFs using the kernel's <code>vfio-pci</code> driver
+    * Take the FPGA device out of reset
+    * Open and map large memory regions for DMA using the kernel's <code>hugepages</code> driver
+  * The application is responsible for assigning buffers to one or more of the FPGA's DMA queues
+* Use the <code>sn-cli</code> tool to configure some of the low-level hardware components in the FPGA
+  * Configure the set of valid DMA queues in the FPGA (must match what is set in the DPDK application)
+  * Bring up the physical ethernet ports</p>
+<p>In the examples below, we will be running the <code>pktgen-dpdk</code> application to control packet tx/rx via the FPGA's PCIe physical functions.  This can be very useful for injecting packets into a design for testing behaviour on real hardware.</p>
+<p>For more information about DPDK in general, see:
+* http://core.dpdk.org/doc/</p>
+<p>For more information about the <code>pktgen-dpdk</code> application, see:
+* https://pktgen-dpdk.readthedocs.io/en/latest/index.html</p>
+<p>Before you bring up the <code>sn-stack</code>, please ensure that you have uncommented this line in your <code>.env</code> file</p>
+<pre><code>COMPOSE_PROFILES=smartnic-dpdk
+</code></pre>
+<p>If you changed this while the stack was already running, you'll need to restart the stack with down/up.</p>
+<p>First, you'll need to start up the <code>pktgen</code> application to open the vfio-pci device for PF0 and PF1 and take the FPGA out of reset.</p>
+<pre><code>$ docker compose exec smartnic-dpdk bash
+root@smartnic-dpdk:/# pktgen -a $SN_PCIE_DEV.0 -a $SN_PCIE_DEV.1 -l 4-8 -n 4 -d librte_net_qdma.so --file-prefix $SN_PCIE_DEV- -- -v -m [5:6].0 -m [7:8].1
+Pktgen:/&gt; help
+</code></pre>
+<p>NOTE: Leave this application running while doing the remaining setup steps.  The setup steps below must be re-run after each time you restart the pktgen application since the FPGA gets reset between runs.</p>
+<p>Open a <strong>separate</strong> shell window which you will use for doing the low-level smartnic platform configuration.</p>
+<p>Configure the Queue mappings for host PF0 and PF1 interfaces and bring up the physical ethernet ports using the <code>smartnic-fw</code> container.</p>
+<pre><code>$ docker compose exec smartnic-fw bash
+root@smartnic-fw:/# sn-cli qdma setqs 1 1
+root@smartnic-fw:/# sn-cli qdma status
+root@smartnic-fw:/# sn-cli cmac enable
+root@smartnic-fw:/# sn-cli cmac status
+</code></pre>
+<p>Setting up the queue mappings tells the smartnic platform which QDMA queues to use for h2c and c2h packets.  Enabling the CMACs allows Rx and Tx packets to flow (look for <code>MAC ENABLED/PHY UP</code>).</p>
+<h3 id="references">References</h3>
+<p>This tutorial is built on the following software/respositories along with versions/commits:</p>
+<ul>
+<li>Ubuntu 20.04 with Linux 5.4.0-153.</li>
+<li>Vivado 2023.1 with the VitisNetowrkingP4 license.</li>
+<li>The <a href="https://github.com/esnet/esnet-smartnic-hw">esnet-smartnic-hw</a> repository (commit: 9ee2cbb).</li>
+<li>The <a href="https://github.com/esnet/esnet-smartnic-fw">esnet-smartnic-fw</a> repository (commit: 180595c).</li>
+<li>The <a href="https://github.com/esnet/smartnic-dpdk-docker">smartnic-dpdk-docker</a> repository (commit: a52dba3).</li>
+<li>The <a href="https://github.com/esnet/xilinx-labtools-docker">xilinx-labtools-docker</a> repository (commit: 84cf05f).</li>
+</ul>
+<h3 id="known-issues">Known Issues</h3>
+<p>None to date. If you face any issues, please contact <a href="mailto:msada@hawk.iit.edu">msada@hawk.iit.edu</a></p>
+<h2 id="advanced-lesson-7-dpdk">Advanced Lesson 7: DPDK</h2>
+<p>Link: <strong><a href="../7-lesson7/">Advanced Lesson 7: DPDK</a></strong></p></div>
+            </div>
+        </div>
+
+        <footer class="col-md-12">
+            <hr>
+            <p>Documentation built with <a href="https://www.mkdocs.org/">MkDocs</a>.</p>
+        </footer>
+        <script src="../js/jquery-3.6.0.min.js"></script>
+        <script src="../js/bootstrap.min.js"></script>
+        <script>
+            var base_url = "..",
+                shortcuts = {"help": 191, "next": 78, "previous": 80, "search": 83};
+        </script>
+        <script src="../js/base.js"></script>
+        <script src="../search/main.js"></script>
+
+        <div class="modal" id="mkdocs_search_modal" tabindex="-1" role="dialog" aria-labelledby="searchModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="searchModalLabel">Search</h4>
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+            </div>
+            <div class="modal-body">
+                <p>From here you can search these documents. Enter your search terms below.</p>
+                <form>
+                    <div class="form-group">
+                        <input type="search" class="form-control" placeholder="Search..." id="mkdocs-search-query" title="Type search term here">
+                    </div>
+                </form>
+                <div id="mkdocs-search-results" data-no-results-text="No results found"></div>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div><div class="modal" id="mkdocs_keyboard_modal" tabindex="-1" role="dialog" aria-labelledby="keyboardModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="keyboardModalLabel">Keyboard Shortcuts</h4>
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+            </div>
+            <div class="modal-body">
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th style="width: 20%;">Keys</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td class="help shortcut"><kbd>?</kbd></td>
+                    <td>Open this help</td>
+                  </tr>
+                  <tr>
+                    <td class="next shortcut"><kbd>n</kbd></td>
+                    <td>Next page</td>
+                  </tr>
+                  <tr>
+                    <td class="prev shortcut"><kbd>p</kbd></td>
+                    <td>Previous page</td>
+                  </tr>
+                  <tr>
+                    <td class="search shortcut"><kbd>s</kbd></td>
+                    <td>Search</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div>
+
+    </body>
+</html>

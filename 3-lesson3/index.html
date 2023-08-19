@@ -1,0 +1,331 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        
+        
+        
+        <link rel="shortcut icon" href="../img/favicon.ico">
+        <title>P4 Simulation - esnet-smartnic-tutorial</title>
+        <link href="../css/bootstrap.min.css" rel="stylesheet">
+        <link href="../css/font-awesome.min.css" rel="stylesheet">
+        <link href="../css/base.css" rel="stylesheet">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/atelier-dune-light.min.css">
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
+        <script>hljs.highlightAll();</script> 
+    </head>
+
+    <body>
+        <div class="navbar fixed-top navbar-expand-lg navbar-dark bg-primary">
+            <div class="container">
+                <a class="navbar-brand" href="..">esnet-smartnic-tutorial</a>
+                <!-- Expander button -->
+                <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbar-collapse">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+
+                <!-- Expanded navigation -->
+                <div id="navbar-collapse" class="navbar-collapse collapse">
+                        <!-- Main navigation -->
+                        <ul class="nav navbar-nav">
+                            <li class="navitem">
+                                <a href=".." class="nav-link">Home</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../1-lesson1/" class="nav-link">Getting Started</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../2-lesson2/" class="nav-link">esnet-smartnic-hw</a>
+                            </li>
+                            <li class="navitem active">
+                                <a href="./" class="nav-link">P4 Simulation</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../4-lesson4/" class="nav-link">RTL Simulation</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../5-lesson5/" class="nav-link">The ESnet Stack</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../6-lesson6/" class="nav-link">esnet-smartnic-fw</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../7-lesson7/" class="nav-link">DPDK</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../z-appendix_a/" class="nav-link">Operator's Guide</a>
+                            </li>
+                        </ul>
+
+                    <ul class="nav navbar-nav ml-auto">
+                        <li class="nav-item">
+                            <a href="#" class="nav-link" data-toggle="modal" data-target="#mkdocs_search_modal">
+                                <i class="fa fa-search"></i> Search
+                            </a>
+                        </li>
+                            <li class="nav-item">
+                                <a rel="prev" href="../2-lesson2/" class="nav-link">
+                                    <i class="fa fa-arrow-left"></i> Previous
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a rel="next" href="../4-lesson4/" class="nav-link">
+                                    Next <i class="fa fa-arrow-right"></i>
+                                </a>
+                            </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="container">
+            <div class="row">
+                    <div class="col-md-3"><div class="navbar-light navbar-expand-md bs-sidebar hidden-print affix" role="complementary">
+    <div class="navbar-header">
+        <button type="button" class="navbar-toggler collapsed" data-toggle="collapse" data-target="#toc-collapse" title="Table of Contents">
+            <span class="fa fa-angle-down"></span>
+        </button>
+    </div>
+
+    
+    <div id="toc-collapse" class="navbar-collapse collapse card bg-secondary">
+        <ul class="nav flex-column">
+            
+            <li class="nav-item" data-level="1"><a href="#using-xilinx-alveo-fpgas-as-smartnics-with-esnet-framework" class="nav-link">Using Xilinx Alveo FPGAs as SmartNICs with ESnet Framework</a>
+              <ul class="nav flex-column">
+            <li class="nav-item" data-level="2"><a href="#lesson-3-p4-simulation" class="nav-link">Lesson 3: P4 Simulation</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-level="2"><a href="#example-design-p4_only" class="nav-link">Example Design: p4_only</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-level="2"><a href="#functional-specification" class="nav-link">Functional Specification</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-level="2"><a href="#development-flow" class="nav-link">Development Flow</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-level="2"><a href="#makefile" class="nav-link">Makefile</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-level="2"><a href="#testcase-input-files" class="nav-link">Testcase Input Files</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-level="2"><a href="#testcase-output-files" class="nav-link">Testcase Output Files</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-level="2"><a href="#testcases-p4_only" class="nav-link">Testcases: p4_only</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-level="2"><a href="#lesson-4-rtl-simulation" class="nav-link">Lesson 4: RTL Simulation</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+              </ul>
+            </li>
+        </ul>
+    </div>
+</div></div>
+                    <div class="col-md-9" role="main">
+
+<h1 id="using-xilinx-alveo-fpgas-as-smartnics-with-esnet-framework">Using Xilinx Alveo FPGAs as SmartNICs with ESnet Framework</h1>
+<h2 id="lesson-3-p4-simulation">Lesson 3: P4 Simulation</h2>
+<p>In this lesson, you will be simulating the behavior of the program that you had written in Lesson 2. Please keep in mind that this is a behavioral simulation. The steps to simulate the hardware behavior are in Lesson 4.</p>
+<h2 id="example-design-p4_only">Example Design: p4_only</h2>
+<p>The p4_only example design provides the P4 source code and a behavioural simulation testcase for a simple
+P4 application core.</p>
+<p>This example follows a pure P4 design flow and does NOT include any custom verilog hardware.  As such,
+the user only provides the working P4 program file to build the custom SmartNIC hardware.</p>
+<h2 id="functional-specification">Functional Specification</h2>
+<p>The p4_only design implements a simple table-based Layer-2 packet switch.  It uses a single LPM lookup
+table that takes the Ethernet Destination MAC Address field as the key.</p>
+<p>When the lookup matches, the table returns the programmed destination port for the specified packet flow.
+The returned destination port is then written into the output metadata (<code>egress_port</code> field), which is used
+by the SmartNIC hardware for packet forwarding.</p>
+<p>When the lookup misses, the output metadata remains unchanged and the packet is forwarded to the destination
+port that was specified in the packet's input metadata (<code>egress_port</code> field).</p>
+<p>Packets with invalid and errored Ethernet headers are dropped.</p>
+<h2 id="development-flow">Development Flow</h2>
+<p>The sections below direct the user to:</p>
+<ol>
+<li>Install the SmartNIC platform design repositories. (Lesson 1 and 2)</li>
+<li>Execute a P4 behavioural simulation (to verify P4 program correctness ahead of building hardware). (Lesson 3)</li>
+<li>Generate and Simulate the AMD (Xilinx) Vitisnetp4 Example Design at the RTL-level (optional). (Lesson 4)</li>
+<li>Build the P4-based custom SmartNIC hardware. (Lesson 5)</li>
+</ol>
+<h2 id="makefile">Makefile</h2>
+<p>The execution of P4 behavioural simulations is driven by the Makefile
+in the p4/sim/ directory.</p>
+<p>This Makefile includes the variable assignments that specify how to run
+a p4 behavioural simulation, as well as the name of the p4 file and list
+of testcases that should be included in a full simulation run.</p>
+<p>Each testcase is captured in a separate subdirectory, which contains the
+input and output files for the specified test.  The testcase subdirectories
+follow the naming pattern of <code>test-&lt;NAME&gt;</code>.</p>
+<p>Prior to running a simulation, the user should update the Makefile with the
+following variable assignments (all other variable assignments can remain
+unchanged):</p>
+<pre><code> P4_SOURCE = &lt;pathname of p4 source file&gt;
+ P4BM_DIRS = &lt;testcase subdirectory list&gt;
+</code></pre>
+<p>The Makefile includes execution targets to run (or clean) a single testcase
+simulation, or simulation of the full testcase suite.</p>
+<p>To simulate a single testcase, execute make with the <code>P4BM_DIR=</code> argument
+set to the testcase subdirectory of interest.  For example:</p>
+<pre><code> &gt; make P4BM_DIR=test-fwd-p0
+</code></pre>
+<p>Or to simulate all test cases:</p>
+<pre><code> &gt; make sim-all
+</code></pre>
+<p>Note: the <code>sim-all</code> target is the default target when make is called without
+arguments.</p>
+<p>To clean all simulation output products from the p4 directory, type:</p>
+<pre><code> &gt; make clean
+</code></pre>
+<h2 id="testcase-input-files">Testcase Input Files</h2>
+<p>The input stimulus file set for each testcase includes three files:</p>
+<ol>
+<li>
+<p><code>cli_commands.txt</code> - Command script to set table entries and initiate input
+stimulus. Commands and syntax follow the Xilinx p4bm-vitisnet-cli.</p>
+</li>
+<li>
+<p><code>packets_in.user</code> - Input packet stream user data.  Each byte sequence terminated
+by a semicolon (;) represents a packet.  Packets are captured in sequence.  The '%'
+character is used to start comments.</p>
+<p><code>packets_in.pcap</code> - PCAP file containing the input packet stream.
+                    Alternative format to <code>packets_in.user</code> (optional).</p>
+</li>
+<li>
+<p><code>packets_in.meta</code> - Input packet metadata.  Each line corresponds
+to a packet in the input PCAP file (in sequence).  The syntax of the metadata
+is described in the Xilinx VitisnetP4 documentation.  Note: Each metadata record
+must be terminated by a semicolon (;).</p>
+</li>
+</ol>
+<p>For more details, see chapter 3 of <em>Vitis Networking P4 User Guide, UG1308 (v2023.1) May 16, 2023</em>.</p>
+<h2 id="testcase-output-files">Testcase Output Files</h2>
+<ol>
+<li><code>packets_out.user</code> - Output packet stream user data. Same syntax as input
+packet stream user data.</li>
+</ol>
+<p><code>packets_out.pcap</code> - PCAP file containing the output packet stream,
+                        if packets_in format was <code>packets_in.pcap</code>.</p>
+<ol>
+<li><code>packets_out.meta</code> - Output packet metadata.  Each line corresponds
+to a packet in the output PCAP file (in sequence).  Same syntax as input
+packet metadata.</li>
+</ol>
+<p>Note: An expected/ directory is optionally included to capture the expected
+output results of a testcase.  This expected output can be used for
+automated regression testing.</p>
+<h2 id="testcases-p4_only">Testcases: p4_only</h2>
+<p><code>test-fwd-p0</code> - The p4_only design includes a single example testcase called
+test-fwd-p0.  This testcase programs a small number of table entries that
+forward the specified packet flows to destination port 0.  The input
+stimulus includes a single packet on each flow to validate that all packets
+are forwarded to port 0.  All other packets are forwarded to the egress_port specified
+by the input meta data.</p>
+<h3 id="references">References</h3>
+<p>This tutorial is built on the following software/respositories along with versions/commits:</p>
+<ul>
+<li>Ubuntu 20.04 with Linux 5.4.0-153.</li>
+<li>Vivado 2023.1 with the VitisNetowrkingP4 license.</li>
+<li>The <a href="https://github.com/esnet/esnet-smartnic-hw">esnet-smartnic-hw</a> repository (commit: 9ee2cbb).</li>
+<li>The <a href="https://github.com/esnet/esnet-smartnic-fw">esnet-smartnic-fw</a> repository (commit: 180595c).</li>
+<li>The <a href="https://github.com/esnet/smartnic-dpdk-docker">smartnic-dpdk-docker</a> repository (commit: a52dba3).</li>
+<li>The <a href="https://github.com/esnet/xilinx-labtools-docker">xilinx-labtools-docker</a> repository (commit: 84cf05f).</li>
+</ul>
+<h3 id="known-issues">Known Issues</h3>
+<p>None to date. If you face any issues, please contact <a href="mailto:msada@hawk.iit.edu">msada@hawk.iit.edu</a></p>
+<h2 id="lesson-4-rtl-simulation">Lesson 4: RTL Simulation</h2>
+<p>Link: <strong><a href="../4-lesson4/">Lesson 4: RTL Simulation</a></strong></p></div>
+            </div>
+        </div>
+
+        <footer class="col-md-12">
+            <hr>
+            <p>Documentation built with <a href="https://www.mkdocs.org/">MkDocs</a>.</p>
+        </footer>
+        <script src="../js/jquery-3.6.0.min.js"></script>
+        <script src="../js/bootstrap.min.js"></script>
+        <script>
+            var base_url = "..",
+                shortcuts = {"help": 191, "next": 78, "previous": 80, "search": 83};
+        </script>
+        <script src="../js/base.js"></script>
+        <script src="../search/main.js"></script>
+
+        <div class="modal" id="mkdocs_search_modal" tabindex="-1" role="dialog" aria-labelledby="searchModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="searchModalLabel">Search</h4>
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+            </div>
+            <div class="modal-body">
+                <p>From here you can search these documents. Enter your search terms below.</p>
+                <form>
+                    <div class="form-group">
+                        <input type="search" class="form-control" placeholder="Search..." id="mkdocs-search-query" title="Type search term here">
+                    </div>
+                </form>
+                <div id="mkdocs-search-results" data-no-results-text="No results found"></div>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div><div class="modal" id="mkdocs_keyboard_modal" tabindex="-1" role="dialog" aria-labelledby="keyboardModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="keyboardModalLabel">Keyboard Shortcuts</h4>
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+            </div>
+            <div class="modal-body">
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th style="width: 20%;">Keys</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td class="help shortcut"><kbd>?</kbd></td>
+                    <td>Open this help</td>
+                  </tr>
+                  <tr>
+                    <td class="next shortcut"><kbd>n</kbd></td>
+                    <td>Next page</td>
+                  </tr>
+                  <tr>
+                    <td class="prev shortcut"><kbd>p</kbd></td>
+                    <td>Previous page</td>
+                  </tr>
+                  <tr>
+                    <td class="search shortcut"><kbd>s</kbd></td>
+                    <td>Search</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div>
+
+    </body>
+</html>

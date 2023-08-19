@@ -1,0 +1,348 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        
+        
+        
+        <link rel="shortcut icon" href="../img/favicon.ico">
+        <title>Getting Started - esnet-smartnic-tutorial</title>
+        <link href="../css/bootstrap.min.css" rel="stylesheet">
+        <link href="../css/font-awesome.min.css" rel="stylesheet">
+        <link href="../css/base.css" rel="stylesheet">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/atelier-dune-light.min.css">
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
+        <script>hljs.highlightAll();</script> 
+    </head>
+
+    <body>
+        <div class="navbar fixed-top navbar-expand-lg navbar-dark bg-primary">
+            <div class="container">
+                <a class="navbar-brand" href="..">esnet-smartnic-tutorial</a>
+                <!-- Expander button -->
+                <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbar-collapse">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+
+                <!-- Expanded navigation -->
+                <div id="navbar-collapse" class="navbar-collapse collapse">
+                        <!-- Main navigation -->
+                        <ul class="nav navbar-nav">
+                            <li class="navitem">
+                                <a href=".." class="nav-link">Home</a>
+                            </li>
+                            <li class="navitem active">
+                                <a href="./" class="nav-link">Getting Started</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../2-lesson2/" class="nav-link">esnet-smartnic-hw</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../3-lesson3/" class="nav-link">P4 Simulation</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../4-lesson4/" class="nav-link">RTL Simulation</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../5-lesson5/" class="nav-link">The ESnet Stack</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../6-lesson6/" class="nav-link">esnet-smartnic-fw</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../7-lesson7/" class="nav-link">DPDK</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../z-appendix_a/" class="nav-link">Operator's Guide</a>
+                            </li>
+                        </ul>
+
+                    <ul class="nav navbar-nav ml-auto">
+                        <li class="nav-item">
+                            <a href="#" class="nav-link" data-toggle="modal" data-target="#mkdocs_search_modal">
+                                <i class="fa fa-search"></i> Search
+                            </a>
+                        </li>
+                            <li class="nav-item">
+                                <a rel="prev" href=".." class="nav-link">
+                                    <i class="fa fa-arrow-left"></i> Previous
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a rel="next" href="../2-lesson2/" class="nav-link">
+                                    Next <i class="fa fa-arrow-right"></i>
+                                </a>
+                            </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="container">
+            <div class="row">
+                    <div class="col-md-3"><div class="navbar-light navbar-expand-md bs-sidebar hidden-print affix" role="complementary">
+    <div class="navbar-header">
+        <button type="button" class="navbar-toggler collapsed" data-toggle="collapse" data-target="#toc-collapse" title="Table of Contents">
+            <span class="fa fa-angle-down"></span>
+        </button>
+    </div>
+
+    
+    <div id="toc-collapse" class="navbar-collapse collapse card bg-secondary">
+        <ul class="nav flex-column">
+            
+            <li class="nav-item" data-level="1"><a href="#using-xilinx-alveo-fpgas-as-smartnics-with-esnet-framework" class="nav-link">Using Xilinx Alveo FPGAs as SmartNICs with ESnet Framework</a>
+              <ul class="nav flex-column">
+            <li class="nav-item" data-level="2"><a href="#lesson-1-getting-started" class="nav-link">Lesson 1: Getting Started</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-level="2"><a href="#lesson-2-esnet-smartnic-hw" class="nav-link">Lesson 2: esnet-smartnic-hw</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+              </ul>
+            </li>
+        </ul>
+    </div>
+</div></div>
+                    <div class="col-md-9" role="main">
+
+<h1 id="using-xilinx-alveo-fpgas-as-smartnics-with-esnet-framework">Using Xilinx Alveo FPGAs as SmartNICs with ESnet Framework</h1>
+<h2 id="lesson-1-getting-started">Lesson 1: Getting Started</h2>
+<p>Welcome to the tutorial on utilizing Xilinx Alveo FPGAs as SmartNICs within the ESnet framework. In this tutorial, we'll guide you through the process of setting up, configuring, and utilizing the power of Xilinx Alveo FPGAs for network acceleration using the ESnet framework.</p>
+<h3 id="introduction">Introduction:</h3>
+<p>The tools required to be able to write, test, simulate and compile P4 programs written for the Xilinx Alveo FPGAs are based on (and included) in the <a href="https://github.com/esnet/esnet-smartnic-hw">esnet-smartnic-hw</a> repository.</p>
+<h3 id="repository-structure-and-dependencies">Repository Structure and Dependencies</h3>
+<p>The ESnet SmartNIC platform is comprised of a collection of separate modular components,
+each maintained in their own git repository.</p>
+<p>The platform includes the following repositories:</p>
+<ul>
+<li>
+<p><code>OpenNIC shell</code> (https://github.com/esnet/open-nic-shell.git)
+     An FPGA-based NIC shell that runs on the AMD (Xilinx) Alveo
+     family of hardware boards.  This repository is a fork of a
+     Xilinx-provided repository (https://github.com/Xilinx/open-nic-shell.git).
+     This repository also includes customizations for the ESnet SmartNIC platform.</p>
+</li>
+<li>
+<p><code>ESnet SmartNIC Hardware</code> (https://github.com/esnet/esnet-smartnic-hw.git)
+     Hardware design directory for the ESnet SmartNIC platform.</p>
+</li>
+<li>
+<p><code>ESnet SmartNIC Firmware</code> (https://github.com/esnet/esnet-smartnic-fw.git)
+     Firmware design directory for the ESnet SmartNIC platform.</p>
+</li>
+<li>
+<p><code>ESnet FPGA library</code> (https://github.com/esnet/esnet-fpga-library.git)
+     General-purpose components and infrastructure for a structured FPGA design methodology.</p>
+</li>
+<li>
+<p><code>SVunit</code> (https://github.com/svunit/svunit.git)
+     An open-source framework for FPGA System Verilog
+     verification. SVunit is used by the SmartNIC platform, but is
+     neither maintained nor distributed by ESnet.</p>
+</li>
+<li>
+<p><code>ESnet Regio</code> (https://github.com/esnet/regio.git)
+     Automation tools for the implementation of FPGA register map logic and software code.</p>
+</li>
+</ul>
+<p>All dependent repositories are instantiated in the parent repository as a submodule, as
+depicted below:</p>
+<pre><code>esnet-smartnic-hw/ (parent repository)
+├── esnet-fpga-library/ (submodule)
+│   └── tools/
+│       ├── regio/ (submodule)
+│       └── svunit/ (submodule)
+└── open-nic-shell/ (submodule)
+
+esnet-smartnic-fw/ (parent repository)
+</code></pre>
+<h3 id="directory-structure">Directory Structure</h3>
+<p>The directory structure for the ESnet SmartNIC hardware design repository is captured and described below.</p>
+<pre><code>esnet-smartnic-hw/
+├── cfg/
+├── config.mk
+├── docs/
+├── esnet-fpga-library/
+├── examples/
+├── LICENSE.md
+├── Makefile
+├── makefile.esnet
+├── open-nic-shell/
+├── paths.mk
+├── README.md
+├── scripts/
+└── src/
+
+cfg/
+  Contains global configuration files for the SmartNIC project.
+
+config.mk
+  Sets environment variables for the SmartNIC project.
+
+docs/
+  Contains documentation files for the SmartNIC platform.
+
+esnet-fpga-library/
+  Contains the ESnet FPGA Design Library (imported as a git submodule).
+  This library contains general-purpose FPGA design content.
+
+examples/
+  Contains SmartNIC application design exaples.  A new application directory can be started
+  by copying one of the provided example directories, or by modeling portions of the example
+  directory structure.
+
+LICENSE.md
+  Contains the licensing terms and copyright notice for this repository.
+
+Makefile
+  SmartNIC platform Makefile.  Used to build the FPGA bitfile for the target application,
+  as well as generate all artifacts necessary for firmware integration on the hardware platform.
+
+makefile.esnet
+  OpenNIC shell Makefile.
+  Used to build the AMD (Xilinx) open-nic-shell for the target application.
+
+open-nic_shell/
+  Contains the AMD (Xilinx) OpenNIC Shell repository (imported as a git submodule).
+  OpenNIC shell delivers an FPGA-based NIC shell with 100Gbps Ethernet ports,
+  for use on the AMD (Xilinx) Alveo platform.
+
+paths.mk
+  Describes paths to resources provided by the SmartNIC project.
+
+README.md
+  This README file.
+
+scripts/
+  Contains SmartNIC platform scripts, for application configuration.
+
+src/
+  Contains RTL source and verification code for SmartNIC platform FPGA design components,
+  captured in System Verilog.
+</code></pre>
+<h3 id="installing-the-smartnic-hardware-design-repository">Installing the SmartNIC Hardware Design Repository</h3>
+<p>The following steps guide a new user through the installation of the
+SmartNIC Hardware Design Repository, beginning with a
+suitably-configured host running Ubuntu 20.04 LTS Linux.</p>
+<ol>
+<li>
+<p>Install the esnet-smartnic-hw respository by creating a clone from github into a local directory:</p>
+<blockquote>
+<p>git clone https://github.com/esnet/esnet-smartnic-hw.git</p>
+</blockquote>
+</li>
+<li>
+<p>Initialize all submodules within the esnet-smartnic-hw/ design directory:</p>
+<blockquote>
+<p>cd esnet-smartnic-hw
+git submodule update --init --recursive</p>
+</blockquote>
+</li>
+<li>
+<p>Install the prerequisites required to run the esnet regio tools:</p>
+<blockquote>
+<p>sudo apt install python3-yaml python3-jinja2 python3-click
+pip3 install -r esnet-fpga-library/tools/regio/requirements.txt</p>
+</blockquote>
+</li>
+</ol>
+<p>Note: The above instructions and more details about the <code>regio</code> tools can be found in the README file
+   at: <code>esnet-fpga-library/tools/regio/README.md</code></p>
+<h3 id="references">References</h3>
+<p>This tutorial is built on the following software/respositories along with versions/commits:</p>
+<ul>
+<li>Ubuntu 20.04 with Linux 5.4.0-153.</li>
+<li>Vivado 2023.1 with the VitisNetowrkingP4 license.</li>
+<li>The <a href="https://github.com/esnet/esnet-smartnic-hw">esnet-smartnic-hw</a> repository (commit: 9ee2cbb).</li>
+<li>The <a href="https://github.com/esnet/esnet-smartnic-fw">esnet-smartnic-fw</a> repository (commit: 180595c).</li>
+<li>The <a href="https://github.com/esnet/smartnic-dpdk-docker">smartnic-dpdk-docker</a> repository (commit: a52dba3).</li>
+<li>The <a href="https://github.com/esnet/xilinx-labtools-docker">xilinx-labtools-docker</a> repository (commit: 84cf05f).</li>
+</ul>
+<h3 id="known-issues">Known Issues</h3>
+<p>None to date. If you face any issues, please contact <a href="mailto:msada@hawk.iit.edu">msada@hawk.iit.edu</a></p>
+<h2 id="lesson-2-esnet-smartnic-hw">Lesson 2: esnet-smartnic-hw</h2>
+<p>Link: <strong><a href="../2-lesson2/">Lesson 2: esnet-smartnic-hw</a></strong></p></div>
+            </div>
+        </div>
+
+        <footer class="col-md-12">
+            <hr>
+            <p>Documentation built with <a href="https://www.mkdocs.org/">MkDocs</a>.</p>
+        </footer>
+        <script src="../js/jquery-3.6.0.min.js"></script>
+        <script src="../js/bootstrap.min.js"></script>
+        <script>
+            var base_url = "..",
+                shortcuts = {"help": 191, "next": 78, "previous": 80, "search": 83};
+        </script>
+        <script src="../js/base.js"></script>
+        <script src="../search/main.js"></script>
+
+        <div class="modal" id="mkdocs_search_modal" tabindex="-1" role="dialog" aria-labelledby="searchModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="searchModalLabel">Search</h4>
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+            </div>
+            <div class="modal-body">
+                <p>From here you can search these documents. Enter your search terms below.</p>
+                <form>
+                    <div class="form-group">
+                        <input type="search" class="form-control" placeholder="Search..." id="mkdocs-search-query" title="Type search term here">
+                    </div>
+                </form>
+                <div id="mkdocs-search-results" data-no-results-text="No results found"></div>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div><div class="modal" id="mkdocs_keyboard_modal" tabindex="-1" role="dialog" aria-labelledby="keyboardModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="keyboardModalLabel">Keyboard Shortcuts</h4>
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+            </div>
+            <div class="modal-body">
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th style="width: 20%;">Keys</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td class="help shortcut"><kbd>?</kbd></td>
+                    <td>Open this help</td>
+                  </tr>
+                  <tr>
+                    <td class="next shortcut"><kbd>n</kbd></td>
+                    <td>Next page</td>
+                  </tr>
+                  <tr>
+                    <td class="prev shortcut"><kbd>p</kbd></td>
+                    <td>Previous page</td>
+                  </tr>
+                  <tr>
+                    <td class="search shortcut"><kbd>s</kbd></td>
+                    <td>Search</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div>
+
+    </body>
+</html>
