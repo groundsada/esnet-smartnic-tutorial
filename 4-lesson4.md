@@ -65,7 +65,7 @@ This tutorial is built on the following software/respositories along with versio
 
 ### Known Issues
 
-None to date. If you face any issues, please contact [https://groups.google.com/a/iit.edu/g/cs595-f2023-group](mailto:https://groups.google.com/a/iit.edu/g/cs595-f2023-group)
+None to date. If you face any issues, please contact [https://groups.google.com/a/iit.edu/g/cs595-f2023-group](https://groups.google.com/a/iit.edu/g/cs595-f2023-group)
 
 ## Advanced Lesson 5: The ESnet stack
 
