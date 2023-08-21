@@ -1,5 +1,7 @@
 # Using Xilinx Alveo FPGAs as SmartNICs with ESnet Framework
 
+# Video tutorial available here: [Youtube Link](https://www.youtube.com/playlist?list=PL5Ght4QkHL8Sd7rTLNPv3TjYCZ3GorqPE)
+
 ## Table of Contents
 
 - [Introduction](#introduction)

@@ -161,7 +161,7 @@ This tutorial is built on the following software/respositories along with versio
 
 ### Known Issues
 
-None to date. If you face any issues, please contact [msada@hawk.iit.edu](mailto:msada@hawk.iit.edu)
+None to date. If you face any issues, please contact [https://groups.google.com/a/iit.edu/g/cs595-f2023-group](mailto:https://groups.google.com/a/iit.edu/g/cs595-f2023-group)
 
 ## Lesson 2: esnet-smartnic-hw
 
