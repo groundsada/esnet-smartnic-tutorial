@@ -74,7 +74,7 @@ zip -r artifacts.esnet-smartnic-fw.package.0.zip sn-stack
 Configuring the firmware runtime environment
 --------------------------------------------
 
-The firmware artifact produced by the build (see README.md at the top of this repo) should be transferred to the runtime system that hosts an FPGA card.
+**Optionally** The firmware artifact produced by the build (see README.md at the top of this repo) should be transferred to the runtime system that hosts an FPGA card. If your runtime system that hosts an FPGA card is the same one you built the firmware artifacts on (the same one you ran build.sh on), you can skip this step entirely.
 
 ```
 unzip artifacts.esnet-smartnic-fw.package.0.zip
