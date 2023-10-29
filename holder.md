@@ -1,4 +1,315 @@
-# Using Xilinx Alveo FPGAs as SmartNICs with ESnet Framework
+## Lesson 1: Getting Started
+
+Welcome to the tutorial on utilizing Xilinx Alveo FPGAs as SmartNICs within the ESnet framework. In this tutorial, we'll guide you through the process of setting up, configuring, and utilizing the power of Xilinx Alveo FPGAs for network acceleration using the ESnet framework.
+
+
+
+
+
+
+
+## Lesson 2: esnet-smartnic-hw
+
+This lesson builds on following the steps in Lesson 1.
+
+
+In Lesson 3, you will learn how to simulate the behavior of your program.
+
+
+## Lesson 3: P4 Simulation
+
+In this lesson, you will be simulating the behavior of the program that you had written in Lesson 2. Please keep in mind that this is a behavioral simulation. The steps to simulate the hardware behavior are in Lesson 4.
+
+## P4 Simulation: p4_only
+
+The p4_only example design provides the P4 source code and a behavioural simulation testcase for a simple
+P4 application core.
+
+This example follows a pure P4 design flow and does NOT include any custom verilog hardware.  As such,
+the user only provides the working P4 program file to build the custom SmartNIC hardware.
+
+
+
+## Functional Specification
+
+The p4_only design implements a simple table-based Layer-2 packet switch.  It uses a single LPM lookup
+table that takes the Ethernet Destination MAC Address field as the key.
+
+When the lookup matches, the table returns the programmed destination port for the specified packet flow.
+The returned destination port is then written into the output metadata (`egress_port` field), which is used
+by the SmartNIC hardware for packet forwarding.
+
+When the lookup misses, the output metadata remains unchanged and the packet is forwarded to the destination
+port that was specified in the packet's input metadata (`egress_port` field).
+
+Packets with invalid and errored Ethernet headers are dropped.
+
+
+
+## Makefile
+
+The execution of P4 behavioural simulations is driven by the Makefile
+in the p4/sim/ directory.
+
+This Makefile includes the variable assignments that specify how to run
+a p4 behavioural simulation, as well as the name of the p4 file and list
+of testcases that should be included in a full simulation run.
+
+Each testcase is captured in a separate subdirectory, which contains the
+input and output files for the specified test.  The testcase subdirectories
+follow the naming pattern of `test-<NAME>`.
+
+Prior to running a simulation, the user should update the Makefile with the
+following variable assignments (all other variable assignments can remain
+unchanged):
+
+     P4_SOURCE = <pathname of p4 source file>
+     P4BM_DIRS = <testcase subdirectory list>
+
+The Makefile includes execution targets to run (or clean) a single testcase
+simulation, or simulation of the full testcase suite.
+
+To simulate a single testcase, execute make with the `P4BM_DIR=` argument
+set to the testcase subdirectory of interest.  For example:
+
+     > make P4BM_DIR=test-fwd-p0
+
+Or to simulate all test cases:
+
+     > make sim-all
+
+Note: the `sim-all` target is the default target when make is called without
+arguments.
+
+To clean all simulation output products from the p4 directory, type:
+
+     > make clean
+
+
+## Testcase Input Files
+
+The input stimulus file set for each testcase includes three files:
+
+1. `cli_commands.txt` - Command script to set table entries and initiate input
+stimulus. Commands and syntax follow the Xilinx p4bm-vitisnet-cli.
+
+2. `packets_in.user` - Input packet stream user data.  Each byte sequence terminated
+by a semicolon (;) represents a packet.  Packets are captured in sequence.  The '%'
+character is used to start comments.
+
+    `packets_in.pcap` - PCAP file containing the input packet stream.
+                        Alternative format to `packets_in.user` (optional).
+
+3. `packets_in.meta` - Input packet metadata.  Each line corresponds
+to a packet in the input PCAP file (in sequence).  The syntax of the metadata
+is described in the Xilinx VitisnetP4 documentation.  Note: Each metadata record
+must be terminated by a semicolon (;).
+
+For more details, see chapter 3 of *Vitis Networking P4 User Guide, UG1308 (v2023.1) May 16, 2023*.
+
+
+## Testcase Output Files
+
+1. `packets_out.user` - Output packet stream user data. Same syntax as input
+packet stream user data.
+
+   `packets_out.pcap` - PCAP file containing the output packet stream,
+                        if packets_in format was `packets_in.pcap`.
+
+2. `packets_out.meta` - Output packet metadata.  Each line corresponds
+to a packet in the output PCAP file (in sequence).  Same syntax as input
+packet metadata.
+
+Note: An expected/ directory is optionally included to capture the expected
+output results of a testcase.  This expected output can be used for
+automated regression testing.
+
+
+## Testcases: p4_only
+
+`test-fwd-p0` - The p4_only design includes a single example testcase called
+test-fwd-p0.  This testcase programs a small number of table entries that
+forward the specified packet flows to destination port 0.  The input
+stimulus includes a single packet on each flow to validate that all packets
+are forwarded to port 0.  All other packets are forwarded to the egress_port specified
+by the input meta data.
+
+
+## Lesson 4: RTL Simulation
+
+In this lesson, you will learn to generate and simulate the AMD (Xilinx) Vitisnetp4 example design at the RTL-level
+
+### Generating and Simulating the AMD (Xilinx) Vitisnetp4 Example Design
+
+1. Prior to generating the AMD (Xilinx) vitisnetp4 example design, a user must specify the p4bm test directory
+that will be imported for simulation.  This is done by assigning the full directory pathname to the
+EXAMPLE_TEST_DIR variable in the application Makefile. For example:
+
+       export EXAMPLE_TEST_DIR := $(CURDIR)/p4/sim/test-fwd-p0
+
+   By setting the above Makefile variable, the example design will import all input stimulus, CLI programming,
+and any (optional) extern behvioural models associated with the specified simulation testcase.
+
+
+2. The AMD (Xilinx) vitisnetp4 example design can be generated in the local application design directory by
+running the 'example' target of the root-level application Makefile, as follows:
+
+       > make example
+
+   Executing the above make command will generate the vitisnetp4 example design in a subdirectory
+called `example/sdnet_0_ex/`.
+
+
+3. From the `example/sdnet_0_ex/` subdirectory, the AMD (Xilinx) Vivado tool can be invoked, the
+example design project can be opened, and the p4 processor can be simulated, as follows:
+
+       > cd example/sdnet_0_ex
+       > vivado
+
+       - From the `File->Project->Open...` menu, select 'sdnet_0_ex.xpr' and open the example design project.
+       - From the `Flow Navigator` menu, select 'Simulation->Run Simulation->Run Behavioural Simulation'.
+
+   For more information about how to simulate designs and evaluate results within the AMD (Xilinx) Vivado GUI,
+refer to the following document:
+
+   - *Vivado Design Suite User Guide - Logic Simulation, UG900 (v2023.1) May 10, 2023.*
+
+
+4. Note that vitisnetp4 example design generation supports the optional instantiation of custom user extern
+function(s) by including the following design files:
+
+   - System Verilog RTL code for custom extern function(s) in the file `extern/rtl/smartnic_extern.sv`.
+  Furthermore, if a user captures extern function(s) in a design hierarchy comprised of multiple .sv files,
+  all of the .sv files located in the `extern/rtl` directory will be included in the example design project,
+
+   - C++ behavioural model(s) for custom extern function(s) in the file `p4/sim/user_externs/smartnic_extern.cpp`
+
+   Furthermore, when simulating the vitisnetp4 example design with a user extern, the `smartnic_extern`
+instantiation is located within the `example_dut_wrapper` module (instance name `dut_inst/smartnic_extern_0`).
+
+
+## Advanced Lesson 5: The ESnet stack
+
+In this lesson, you will learn how to build 2 of the 3 components that make the ESnet stack.
+
+Setting up the build environment
+================================
+
+The smartnic firmware build depends on `docker` and the `docker compose` plugin.
+
+Docker
+------
+
+Install Docker on your system following the instructions found here for the **linux** variant that you are using
+* https://docs.docker.com/engine/install/
+
+Ensure that you follow the post-install instructions here so that you can run docker **without sudo**
+* https://docs.docker.com/engine/install/linux-postinstall/
+
+Verify your docker setup by running this as an ordinary (non-root) user without using `sudo`
+```
+docker run hello-world
+```
+
+Docker Compose
+==============
+
+The `docker-compose.yml` file for the smartnic build and the sn-stack depends on features that are only supported in the compose v2 plugin.
+
+Install the `docker compose` plugin like this for a single user:
+
+```
+mkdir -p ~/.docker/cli-plugins/
+curl -SL https://github.com/docker/compose/releases/download/v2.17.2/docker-compose-linux-x86_64 -o ~/.docker/cli-plugins/docker-compose
+chmod +x ~/.docker/cli-plugins/docker-compose
+```
+
+Alternatively, you can install the `docker compose` plugin system-wide like this:
+```
+sudo mkdir -p /usr/local/lib/docker/cli-plugins
+sudo curl  -o /usr/local/lib/docker/cli-plugins/docker-compose -SL https://github.com/docker/compose/releases/download/v2.17.2/docker-compose-linux-x86_64
+sudo chmod +x /usr/local/lib/docker/cli-plugins/docker-compose
+```
+
+Verify your docker compose installation by running this as an ordinary (non-root) user without using `sudo`.  For this install, the version output should be
+```
+$ docker compose version
+Docker Compose version v2.17.2
+```
+
+Git Submodules
+--------------
+Ensure that all submodules have been pulled.
+
+```
+git submodule init
+git submodule update
+```
+
+Building a new firmware image
+=============================
+
+
+Install Smartnic Hardware Build Artifact
+----------------------------------------
+
+The firmware build depends on the result of a smartnic hardware (FPGA) build.  This file must be available prior to invoking the firmware build.
+
+This file will be called `artifacts.<board>.<app_name>.0.zip` and should be placed in the `sn-hw` directory in your source tree before starting the firmware build.
+
+
+Create 'smartnic-dpdk-docker' Image
+-----------------------------------
+
+- Clone the repository:
+```
+git clone https://github.com/esnet/smartnic-dpdk-docker.git
+```
+- Installing git submodules
+```
+git submodule update --init --recursive
+```
+- Building the smartnic-dpdk-docker container
+```
+docker build --pull -t smartnic-dpdk-docker:${USER}-dev .
+docker image ls
+```
+
+
+
+Create 'xilinx-labtools-docker' Image
+-------------------------------------
+
+- Clone the repository:
+```
+git clone https://github.com/esnet/xilinx-labtools-docker.git
+```
+- Download the Xilinx Labtools Installer
+  * Open a web browser to this page: https://www.xilinx.com/support/download/index.html/content/xilinx/en/downloadNav/vivado-design-tools/2023-1.html
+  * Under the `Vivado Lab Solutions - 2023.1` section
+    * Download `Vivado 2023.1: Lab Edition - Linux`
+    * Save the file as exactly: `Xilinx_Vivado_Lab_Lin_2023.1_0507_1903.tar.gz`
+  * Move the file into the `vivado-installer` directory in this repo
+
+```
+$ tree
+.
+├── Dockerfile
+├── sources.list.focal
+└── vivado-installer
+    ├── install_config_lab.2023.1.txt
+    └── Xilinx_Vivado_Lab_Lin_2023.1_0507_1903.tar.gz   <------- put the installer here
+```
+
+- Building the xilinx-labtools container
+
+```
+docker build --pull -t xilinx-labtools-docker:${USER}-dev .
+docker image ls
+```
+
+- You should see an image called `xilinx-labtools-docker` with tag `${USER}-dev`.
+
 
 ## Advanced Lesson 6: esnet-smartnic-fw
 
@@ -585,22 +896,39 @@ root@smartnic-fw:/# sn-cli cmac status
 Setting up the queue mappings tells the smartnic platform which QDMA queues to use for h2c and c2h packets.  Enabling the CMACs allows Rx and Tx packets to flow (look for `MAC ENABLED/PHY UP`).
 
 
-### References
-
-This tutorial is built on the following software/respositories along with versions/commits:
-
-- Ubuntu 20.04 with Linux 5.4.0-153.
-- Vivado 2023.1 with the VitisNetowrkingP4 license.
-- The [esnet-smartnic-hw](https://github.com/esnet/esnet-smartnic-hw) repository (commit: 9ee2cbb).
-- The [esnet-smartnic-fw](https://github.com/esnet/esnet-smartnic-fw) repository (commit: 180595c).
-- The [smartnic-dpdk-docker](https://github.com/esnet/smartnic-dpdk-docker) repository (commit: a52dba3).
-- The [xilinx-labtools-docker](https://github.com/esnet/xilinx-labtools-docker) repository (commit: 84cf05f).
-
-### Known Issues
-
-None to date. If you face any issues, please contact [mailto:cs595-f2023-group@iit.edu](mailto:cs595-f2023-group@iit.edu)
-
 ## Advanced Lesson 7: DPDK
 
-Link: **[Advanced Lesson 7: DPDK](7-lesson7.md)**
+In this lesson, you will follow simple steps that allow you to use DPDK and pktgen to interact with the P4 program that you have loaded onto the FPGA.
 
+Advanced usage of the pktgen-dpdk application
+=============================================
+
+Example of streaming packets out of an interface from a pcap file rather than generating the packets within the UI.
+Note the `-s <P>:file.pcap` option where `P` refers to the port number to bind the pcap file to.
+
+```
+root@smartnic-dpdk:/# pktgen -a $SN_PCIE_DEV.0 -a $SN_PCIE_DEV.1 -l 4-8 -n 4 -d librte_net_qdma.so --file-prefix $SN_PCIE_DEV- -- -v -m [5:6].0 -m [7:8].1 -s 1:your_custom.pcap
+Pktgen:/> port 1
+Pktgen:/> page pcap
+Pktgen:/> page main
+Pktgen:/> start 1
+Pktgen:/> stop 1
+Pktgen:/> clr
+```
+
+Example of running a particular test case via a script rather than typing at the UI
+
+```
+cat <<_EOF > /tmp/test.pkt
+clr
+set 1 size 1400
+set 1 count 1000000
+enable 0 capture
+start 1
+disable 0 capture
+_EOF
+```
+
+```
+root@smartnic-dpdk:/# pktgen -a $SN_PCIE_DEV.0 -a SN_PCIE_DEV.1 -l 4-8 -n 4 -d librte_net_qdma.so --file-prefix $SN_PCIE_DEV- -- -v -m [5:6].0 -m [7:8].1 -f /tmp/test.pkt
+```

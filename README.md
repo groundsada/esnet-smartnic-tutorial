@@ -1,20 +1,18 @@
 # Using Xilinx Alveo FPGAs as SmartNICs with ESnet Framework
 
-# Video tutorial available here: [Youtube Link](https://www.youtube.com/playlist?list=PL5Ght4QkHL8Sd7rTLNPv3TjYCZ3GorqPE)
+## Video tutorial available here: [Youtube Link](https://www.youtube.com/playlist?list=PL5Ght4QkHL8Sd7rTLNPv3TjYCZ3GorqPE)
 
 ## Table of Contents
 
 - [Introduction](#introduction)
 - [Prerequisites](#prerequisites)
 - [Copyright Notice](#copyright-notice)
-- [Lesson 1: Getting Started](1-lesson1.md)
-- [Lesson 2: esnet-smartnic-hw](2-lesson2.md)
-- [Lesson 3: P4 Simulation](3-lesson3.md)
-- [Lesson 4: RTL Simulation](4-lesson4.md)
-- [Advanced Lesson 5: The ESnet Stack](5-lesson5.md)
-- [Advanced Lesson 6: esnet-smartnic-fw](6-lesson6.md)
-- [Advanced Lesson 7: DPDK](7-lesson7.md)
-- [Appendix A: Operator's Guide](z-appendix_a.md)
+- [Operator's Guide to Configuring an Alveo Host](operator.md)
+- [Lesson 1: Overview](1-lesson1.md)
+- [Lesson 2: The Development Workflow](2-lesson2.md)
+- [Lesson 3: The Deployment Workflow](3-lesson3.md)
+- [Lesson 4: Running the Deployment](4-lesson4.md)
+
 
 ---
 
@@ -32,7 +30,7 @@ Please make sure you have the following (if you are taking CS 595 you can ignor 
 - Xilinx Vivado 2023.1
 - A valid VitisNetworkingP4 license
 
-**For operators/administrators:** If you are seeking configuring your system is to is compatible with the ESnet SmartNIC framework, please see: **[Appendix A: Operator's Guide](z-appendix_a.md)**
+**For operators/administrators:** If you are seeking configuring your system is to is compatible with the ESnet SmartNIC framework, please see: **[Operator's Guide to Configuring an Alveo Host](operator.md)**
 
 ## Copyright Notice
 
@@ -57,7 +55,7 @@ For more information: [ESnet's License](LICENSE_ESNET.md)
 
 ## Getting Started
 
-Get started with lesson 1: **[Lesson 1: Getting Started](1-lesson1.md)**
+Get started with lesson 1: **[Lesson 1: Overview](1-lesson1.md)**
 
 **Happy networking!**
 

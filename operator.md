@@ -1,6 +1,6 @@
 # Using Xilinx Alveo FPGAs as SmartNICs with ESnet Framework
 
-## **Appendix A: Operator's Guide**
+## **Operator's Guide to Configuring an Alveo Host**
 
 This guide provides an in-depth walkthrough of the process involved in harnessing the capabilities of Xilinx Alveo FPGAs as SmartNICs within the ESnet Framework. Divided into two core sections, the guide outlines the steps required for both development and deployment phases.
 
