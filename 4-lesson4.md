@@ -1,6 +1,4 @@
-# Using Xilinx Alveo FPGAs as SmartNICs with ESnet Framework
-
-## Lesson 4: Running the Deployment
+# Lesson 4: Running the Deployment
 
 ### Converting from factory flash image to ESnet Smartnic flash image
 
@@ -575,7 +573,7 @@ root@smartnic-dpdk:/# pktgen -a $SN_PCIE_DEV.0 -a SN_PCIE_DEV.1 -l 4-8 -n 4 -d l
 
 If pktgen isn't starting, please consider the following troubleshooting steps:
 
-1. Ensure you are using the correct profile in your `sn-stack/.env` file and that you are starting pktgen with the right command. For a more detailed understanding of the command, please refer to the pktgen documentation provided earlier.
+Ensure you are using the correct profile in your `sn-stack/.env` file and that you are starting pktgen with the right command. For a more detailed understanding of the command, please refer to the pktgen documentation provided earlier.
 
 If pktgen is starting, but packets aren't flowing as expected, you can check the packet path using the following command inside the `smartnic-fw` container:
 
@@ -583,7 +581,7 @@ If pktgen is starting, but packets aren't flowing as expected, you can check the
 sn-cli probe stats
 ```
 
-3. If packets sent to/from the host aren't achieving line rate (100Gbps per port), it could be due to QDMA queue allocation. You can attempt to allocate more QDMA queues per port by setting `sn-cli qdma setqs` to values higher than `1 1`.
+If packets sent to/from the host aren't achieving line rate (100Gbps per port), it could be due to QDMA queue allocation. You can attempt to allocate more QDMA queues per port by setting `sn-cli qdma setqs` to values higher than `1 1`.
 
 If packets are egressing to the wrong port (whether CMAC or PF), it might be due to the `sn-cli` configuration. For example, here's a script that routes all egress packets to CMAC1:
 

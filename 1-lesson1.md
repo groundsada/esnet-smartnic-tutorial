@@ -1,6 +1,4 @@
-# Using Xilinx Alveo FPGAs as SmartNICs with ESnet Framework
-
-## Lesson 1: Overview
+# Lesson 1: Overview
 
 The ESnet SmartNIC framework provides an entire workflow to program AMD/Xilinx Alveo FPGA cards using P4. The ESnet framework is open-source and available on GitHub. ESnet is a high-performance network that supports scientific research. The ESnet team created the framework that seamlessly integrates AMD/Xilinx tools along with various tools like DPDK to provide an easy way of programming Alveo cards as SmartNICs.
 

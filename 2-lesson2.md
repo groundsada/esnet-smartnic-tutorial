@@ -1,6 +1,4 @@
-# Using Xilinx Alveo FPGAs as SmartNICs with ESnet Framework
-
-## Lesson 2: The Development Workflow
+# Lesson 2: The Development Workflow
 
 Welcome to Lesson 2 of our tutorial series on utilizing Xilinx Alveo FPGAs as SmartNICs within the ESnet framework. This step involves writing the P4 applications, testing, debugging, and compiling them to bitfiles that can be run on the AMD/Xilinx Alveo cards. This step makes use of Vivado and VitisNetworkingP4 to provide all the tools needed for your P4 development. The ESnet framework streamlines your P4 development with readily available scripts and makefiles. These resources ensure that you can seamlessly test and compile your P4 logic into bitfiles, allowing you to focus exclusively on your P4 programming. As mentioned above, this step requires special licensing. If you already possess the bitfiles ready for deployment onto the U280 cards, you may proceed directly to the "Deployment Workflow" section.
 

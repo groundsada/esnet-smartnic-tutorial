@@ -1,6 +1,4 @@
-# Using Xilinx Alveo FPGAs as SmartNICs with ESnet Framework
-
-## Lesson 3: The Deployment Workflow
+# Lesson 3: The Deployment Workflow
 
 In this lesson, we will explore the deployment workflow, which involves the deployment of compiled bitfiles (zipped artifacts) onto the FPGA card. This stage results in a stack of three essential Docker images, namely: 
 

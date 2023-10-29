@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+      <link rel="shortcut icon" href="../img/favicon.ico" />
+    <title>Using Xilinx Alveo FPGAs as SmartNICs with ESnet Framework - The ESnet Framework</title>
+    <link rel="stylesheet" href="../css/theme.css" />
+    <link rel="stylesheet" href="../css/theme_extra.css" />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github.min.css" />
+    
+      <script>
+        // Current page data
+        var mkdocs_page_name = "Using Xilinx Alveo FPGAs as SmartNICs with ESnet Framework";
+        var mkdocs_page_input_path = "operator.md";
+        var mkdocs_page_url = null;
+      </script>
+    
+    <!--[if lt IE 9]>
+      <script src="../js/html5shiv.min.js"></script>
+    <![endif]-->
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
+      <script>hljs.highlightAll();</script> 
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+    <div class="wy-side-scroll">
+      <div class="wy-side-nav-search">
+          <a href=".." class="icon icon-home"> The ESnet Framework
+        </a><div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="../search.html" method="get">
+      <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" title="Type search term here" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="..">Intro</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../1-lesson1/">Lesson 1</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../2-lesson2/">Lesson 2</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../3-lesson3/">Lesson 3</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../4-lesson4/">Lesson 4</a>
+                </li>
+              </ul>
+      </div>
+    </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+      <nav class="wy-nav-top" role="navigation" aria-label="Mobile navigation menu">
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="..">The ESnet Framework</a>
+        
+      </nav>
+      <div class="wy-nav-content">
+        <div class="rst-content"><div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href=".." class="icon icon-home" aria-label="Docs"></a> &raquo;</li>
+      <li class="breadcrumb-item active">Using Xilinx Alveo FPGAs as SmartNICs with ESnet Framework</li>
+    <li class="wy-breadcrumbs-aside">
+    </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+            <div class="section" itemprop="articleBody">
+              
+                <h1 id="using-xilinx-alveo-fpgas-as-smartnics-with-esnet-framework">Using Xilinx Alveo FPGAs as SmartNICs with ESnet Framework</h1>
+<h2 id="operators-guide-to-configuring-an-alveo-host"><strong>Operator's Guide to Configuring an Alveo Host</strong></h2>
+<p>This guide provides an in-depth walkthrough of the process involved in harnessing the capabilities of Xilinx Alveo FPGAs as SmartNICs within the ESnet Framework. Divided into two core sections, the guide outlines the steps required for both development and deployment phases.</p>
+<hr />
+<h3 id="development-phase"><strong>Development Phase</strong></h3>
+<p>The development phase is a critical initial step, encompassing the setup of a conducive environment for crafting, testing, and compiling P4 programs. These programs will eventually be transformed into executable artifacts capable of running on Xilinx Alveo FPGAs.</p>
+<p><strong>1. Installation and Configuration of the Vivado Runtime Environment</strong></p>
+<p>To commence, it is imperative to install the AMD (Xilinx) Vivado tool suite, incorporating the VitisNetP4 option. This entails setting the <code>VitisNetP4_Option_VISIBLE</code> environment variable to <code>true</code> before initiating the installation process. Execute the following BASH shell command:</p>
+<p><code>export VitisNetP4_Option_VISIBLE=true</code></p>
+<p><strong>2. Configuring the Runtime Environment</strong></p>
+<p>Execute the <code>settings64.sh</code> script located in the Vivado installation directory to configure the runtime environment effectively:</p>
+<p><code>source /tools/Xilinx/Vivado/2023.1/settings64.sh</code></p>
+<p>Remember, in this illustration, the Vivado installation directory is situated at <code>/tools/Xilinx/Vivado/2023.1/</code>.</p>
+<p><strong>3. Resolving License Dependencies</strong></p>
+<p>The <code>XILINXD_LICENSE_FILE</code> environment variable needs proper configuration to facilitate license resolution for the AMD (Xilinx) VitisNetp4 IP core. This can be achieved using a <code>.flexlmrc</code> file in the user's home directory or a dedicated BASH script file (like <code>.bashrc</code>). Execute the following BASH shell command as an example:</p>
+<p><code>export XILINXD_LICENSE_FILE=&lt;filename&gt;</code></p>
+<p>Once these steps are completed and you have a valid VitisNetworkingP4 license, your environment will be primed for the development of P4 programs tailored for Xilinx Alveo FPGA cards.</p>
+<hr />
+<h3 id="deployment-phase"><strong>Deployment Phase</strong></h3>
+<p>The deployment phase entails transferring the compiled bitfiles onto Xilinx Alveo FPGAs. To accomplish this, follow these sequential steps:</p>
+<p><strong>1. Ensuring Compatibility and Environment</strong></p>
+<p>Ensure that your system operates within a Linux environment, ideally Ubuntu 20.04, for a stable and reproducible deployment.</p>
+<p><strong>2. FPGA Connectivity Check</strong></p>
+<p>Validate that your host system is equipped with at least one Xilinx FPGA (U280, U55C, U250). Confirm this by running the command:</p>
+<p><code>lspci -d 10ee</code></p>
+<p>This command will display any PCIe-connected FPGAs.</p>
+<p><strong>3. Configuring Hugepages</strong></p>
+<p>Verify that hugepages are appropriately configured by examining the kernel boot command line parameters:</p>
+<p><code>cat /proc/cmdline</code></p>
+<p>Ensure that the output includes lines similar to:</p>
+<pre><code>BOOT_IMAGE=/boot/vmlinuz-5.4.0-126-generic root=/dev/mapper/vg0-root ro default_hugepagesz=1G hugepagesz=1G hugepages=32 intel_iommu=on iommu=pt
+</code></pre>
+<p><strong>4. Grub Configuration</strong></p>
+<p>Edit the <code>/etc/default/grub</code> file to include the following line:</p>
+<p><code>GRUB_CMDLINE_LINUX_DEFAULT="default_hugepagesz=1G hugepagesz=1G hugepages=32 intel_iommu=on iommu=pt"</code></p>
+<p>Subsequently, execute:</p>
+<p><code>sudo update-grub</code></p>
+<p><strong>5. IOMMU Confirmation</strong></p>
+<p>Verify IOMMU is enabled by examining the log:</p>
+<p><code>sudo less /var/log/kern.log</code></p>
+<p><strong>6. JTAG/USB Connection Check</strong></p>
+<p>Ensure that the FPGA has JTAG/USB connectivity by running:</p>
+<p><code>lsusb</code></p>
+<p>Confirm the presence of the device labeled "Future Technology Devices International, Ltd FT232H Single HS USB-UART/FIFO," which signifies the JTAG connection to the FPGA.</p>
+<p><strong>7. Docker Setup</strong></p>
+<p>Install Docker along with the <code>docker-compose-plugin</code> and <code>docker-buildx-plugin</code>. Detailed instructions can be found in <a href="https://docs.docker.com/engine/install/ubuntu/">Docker's official documentation</a>.</p>
+<p><strong>8. Post-Installation Configuration</strong></p>
+<p>Follow the post-installation steps outlined in <a href="https://docs.docker.com/engine/install/linux-postinstall/">Docker's documentation</a> to grant non-privileged users the ability to execute Docker commands and to implement optional configurations.</p>
+<hr />
+<h2 id="completion-and-references"><strong>Completion and References</strong></h2>
+<p>With the successful completion of these phases, your setup is now ready for operation. Should you need further information, the following documents are accessible from the AMD (Xilinx) Vitis Networking P4 Secure Site (upon granted access):</p>
+<ul>
+<li><em>Vitis Networking P4 Installation Guide and Release Notes, UG1307 (v2023.1) May 10, 2023</em>.</li>
+<li><em>Vitis Networking P4 User Guide, UG1308 (v2023.1) May 16, 2023</em>.</li>
+<li><em>Vitis Networking P4 Getting Started Guide, UG1373 (v2023.1) May 16, 2023</em>.</li>
+</ul>
+<p>Additionally, you may find valuable resources at <a href="https://p4.org/">https://p4.org/</a>.</p>
+<h2 id="known-issues"><strong>Known Issues</strong></h2>
+<p>As of now, no known issues have been reported. Your experience should be seamless.</p>
+              
+            </div>
+          </div><footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+  </div>
+
+  Built with <a href="https://www.mkdocs.org/">MkDocs</a> using a <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+          
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+
+  <div class="rst-versions" role="note" aria-label="Versions">
+  <span class="rst-current-version" data-toggle="rst-current-version">
+    
+    
+    
+  </span>
+</div>
+    <script src="../js/jquery-3.6.0.min.js"></script>
+    <script>var base_url = "..";</script>
+    <script src="../js/theme_extra.js"></script>
+    <script src="../js/theme.js"></script>
+      <script src="../search/main.js"></script>
+    <script>
+        jQuery(function () {
+            SphinxRtdTheme.Navigation.enable(true);
+        });
+    </script>
+
+</body>
+</html>

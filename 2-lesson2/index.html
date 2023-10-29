@@ -1,0 +1,658 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+      <link rel="shortcut icon" href="../img/favicon.ico" />
+    <title>Lesson 2 - The ESnet Framework</title>
+    <link rel="stylesheet" href="../css/theme.css" />
+    <link rel="stylesheet" href="../css/theme_extra.css" />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github.min.css" />
+    
+      <script>
+        // Current page data
+        var mkdocs_page_name = "Lesson 2";
+        var mkdocs_page_input_path = "2-lesson2.md";
+        var mkdocs_page_url = null;
+      </script>
+    
+    <!--[if lt IE 9]>
+      <script src="../js/html5shiv.min.js"></script>
+    <![endif]-->
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
+      <script>hljs.highlightAll();</script> 
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+    <div class="wy-side-scroll">
+      <div class="wy-side-nav-search">
+          <a href=".." class="icon icon-home"> The ESnet Framework
+        </a><div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="../search.html" method="get">
+      <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" title="Type search term here" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="..">Intro</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../1-lesson1/">Lesson 1</a>
+                </li>
+              </ul>
+              <ul class="current">
+                <li class="toctree-l1 current"><a class="reference internal current" href="./">Lesson 2</a>
+    <ul class="current">
+    <li class="toctree-l2"><a class="reference internal" href="#introduction">Introduction:</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#repository-structure-and-dependencies">Repository Structure and Dependencies</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#directory-structure">Directory Structure</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#installing-the-smartnic-hardware-design-repository">Installing the SmartNIC Hardware Design Repository</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#building-the-smartnic-p4_only-example-design">Building the SmartNIC p4_only Example Design</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#building-a-new-p4-application">Building a New P4 Application</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#p4-programming-requirements">P4 Programming Requirements</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#amd-xilinx-p4-architecture">AMD (Xilinx) P4 Architecture:</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#include-files">Include files:</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#interfaces">Interfaces:</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#metadata-definitions">Metadata Definitions:</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#lookup-engines-and-externs">Lookup Engines and Externs:</a>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#the-tldr">The tl;dr</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#p4-simulation-p4_only">P4 Simulation: p4_only</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#functional-specification">Functional Specification</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#makefile">Makefile</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#terminal-configuration">Terminal Configuration</a>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#testcase-input-files">Testcase Input Files</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#testcase-output-files">Testcase Output Files</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#testcases-p4_only">Testcases: p4_only</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#generating-and-simulating-the-amd-xilinx-vitisnetp4-example-design">Generating and Simulating the AMD (Xilinx) Vitisnetp4 Example Design</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#references">References</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#known-issues">Known Issues</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#lesson-3-the-deployment-workflow">Lesson 3: The Deployment Workflow</a>
+    </li>
+    </ul>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../3-lesson3/">Lesson 3</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../4-lesson4/">Lesson 4</a>
+                </li>
+              </ul>
+      </div>
+    </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+      <nav class="wy-nav-top" role="navigation" aria-label="Mobile navigation menu">
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="..">The ESnet Framework</a>
+        
+      </nav>
+      <div class="wy-nav-content">
+        <div class="rst-content"><div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href=".." class="icon icon-home" aria-label="Docs"></a> &raquo;</li>
+      <li class="breadcrumb-item active">Lesson 2</li>
+    <li class="wy-breadcrumbs-aside">
+    </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+            <div class="section" itemprop="articleBody">
+              
+                <h1 id="lesson-2-the-development-workflow">Lesson 2: The Development Workflow</h1>
+<p>Welcome to Lesson 2 of our tutorial series on utilizing Xilinx Alveo FPGAs as SmartNICs within the ESnet framework. This step involves writing the P4 applications, testing, debugging, and compiling them to bitfiles that can be run on the AMD/Xilinx Alveo cards. This step makes use of Vivado and VitisNetworkingP4 to provide all the tools needed for your P4 development. The ESnet framework streamlines your P4 development with readily available scripts and makefiles. These resources ensure that you can seamlessly test and compile your P4 logic into bitfiles, allowing you to focus exclusively on your P4 programming. As mentioned above, this step requires special licensing. If you already possess the bitfiles ready for deployment onto the U280 cards, you may proceed directly to the "Deployment Workflow" section.</p>
+<h3 id="introduction">Introduction:</h3>
+<p>The tools required to be able to write, test, simulate and compile P4 programs written for the Xilinx Alveo FPGAs are based on (and included) in the <a href="https://github.com/esnet/esnet-smartnic-hw">esnet-smartnic-hw</a> repository.</p>
+<h3 id="repository-structure-and-dependencies">Repository Structure and Dependencies</h3>
+<p>The ESnet SmartNIC platform is comprised of a collection of separate modular components,
+each maintained in their own git repository.</p>
+<p>The platform includes the following repositories:</p>
+<ul>
+<li>
+<p><code>OpenNIC shell</code> (https://github.com/esnet/open-nic-shell.git)
+     An FPGA-based NIC shell that runs on the AMD (Xilinx) Alveo
+     family of hardware boards.  This repository is a fork of a
+     Xilinx-provided repository (https://github.com/Xilinx/open-nic-shell.git).
+     This repository also includes customizations for the ESnet SmartNIC platform.</p>
+</li>
+<li>
+<p><code>ESnet SmartNIC Hardware</code> (https://github.com/esnet/esnet-smartnic-hw.git)
+     Hardware design directory for the ESnet SmartNIC platform.</p>
+</li>
+<li>
+<p><code>ESnet SmartNIC Firmware</code> (https://github.com/esnet/esnet-smartnic-fw.git)
+     Firmware design directory for the ESnet SmartNIC platform.</p>
+</li>
+<li>
+<p><code>ESnet FPGA library</code> (https://github.com/esnet/esnet-fpga-library.git)
+     General-purpose components and infrastructure for a structured FPGA design methodology.</p>
+</li>
+<li>
+<p><code>SVunit</code> (https://github.com/svunit/svunit.git)
+     An open-source framework for FPGA System Verilog
+     verification. SVunit is used by the SmartNIC platform, but is
+     neither maintained nor distributed by ESnet.</p>
+</li>
+<li>
+<p><code>ESnet Regio</code> (https://github.com/esnet/regio.git)
+     Automation tools for the implementation of FPGA register map logic and software code.</p>
+</li>
+</ul>
+<p>All dependent repositories are instantiated in the parent repository as a submodule, as
+depicted below:</p>
+<pre><code>esnet-smartnic-hw/ (parent repository)
+├── esnet-fpga-library/ (submodule)
+│   └── tools/
+│       ├── regio/ (submodule)
+│       └── svunit/ (submodule)
+└── open-nic-shell/ (submodule)
+
+esnet-smartnic-fw/ (parent repository)
+</code></pre>
+<h3 id="directory-structure">Directory Structure</h3>
+<p>The directory structure for the ESnet SmartNIC hardware design repository is captured and described below.</p>
+<pre><code>esnet-smartnic-hw/
+├── cfg/
+├── config.mk
+├── docs/
+├── esnet-fpga-library/
+├── examples/
+├── LICENSE.md
+├── Makefile
+├── makefile.esnet
+├── open-nic-shell/
+├── paths.mk
+├── README.md
+├── scripts/
+└── src/
+
+cfg/
+  Contains global configuration files for the SmartNIC project.
+
+config.mk
+  Sets environment variables for the SmartNIC project.
+
+docs/
+  Contains documentation files for the SmartNIC platform.
+
+esnet-fpga-library/
+  Contains the ESnet FPGA Design Library (imported as a git submodule).
+  This library contains general-purpose FPGA design content.
+
+examples/
+  Contains SmartNIC application design exaples.  A new application directory can be started
+  by copying one of the provided example directories, or by modeling portions of the example
+  directory structure.
+
+LICENSE.md
+  Contains the licensing terms and copyright notice for this repository.
+
+Makefile
+  SmartNIC platform Makefile.  Used to build the FPGA bitfile for the target application,
+  as well as generate all artifacts necessary for firmware integration on the hardware platform.
+
+makefile.esnet
+  OpenNIC shell Makefile.
+  Used to build the AMD (Xilinx) open-nic-shell for the target application.
+
+open-nic_shell/
+  Contains the AMD (Xilinx) OpenNIC Shell repository (imported as a git submodule).
+  OpenNIC shell delivers an FPGA-based NIC shell with 100Gbps Ethernet ports,
+  for use on the AMD (Xilinx) Alveo platform.
+
+paths.mk
+  Describes paths to resources provided by the SmartNIC project.
+
+README.md
+  This README file.
+
+scripts/
+  Contains SmartNIC platform scripts, for application configuration.
+
+src/
+  Contains RTL source and verification code for SmartNIC platform FPGA design components,
+  captured in System Verilog.
+</code></pre>
+<h3 id="installing-the-smartnic-hardware-design-repository">Installing the SmartNIC Hardware Design Repository</h3>
+<p>The following steps guide a new user through the installation of the
+SmartNIC Hardware Design Repository, beginning with a
+suitably-configured host running Ubuntu 20.04 LTS Linux.</p>
+<ol>
+<li>
+<p>Install the esnet-smartnic-hw respository by creating a clone from github into a local directory:</p>
+<blockquote>
+<p>git clone https://github.com/esnet/esnet-smartnic-hw.git</p>
+</blockquote>
+</li>
+<li>
+<p>Initialize all submodules within the esnet-smartnic-hw/ design directory:</p>
+<blockquote>
+<p>cd esnet-smartnic-hw
+git submodule update --init --recursive</p>
+</blockquote>
+</li>
+<li>
+<p>Install the prerequisites required to run the esnet regio tools:</p>
+<blockquote>
+<p>sudo apt install python3-yaml python3-jinja2 python3-click
+pip3 install -r esnet-fpga-library/tools/regio/requirements.txt</p>
+</blockquote>
+</li>
+</ol>
+<p>Note: The above instructions and more details about the <code>regio</code> tools can be found in the README file
+   at: <code>esnet-fpga-library/tools/regio/README.md</code></p>
+<h3 id="building-the-smartnic-p4_only-example-design">Building the SmartNIC p4_only Example Design</h3>
+<p>You can build the <code>p4_only</code> example design by executing its Makefile. Follow these steps:</p>
+<ol>
+<li>
+<p>Navigate to the p4_only example design directory:
+   ```shell</p>
+<blockquote>
+<p>cd examples/p4_only
+   ```</p>
+</blockquote>
+</li>
+<li>
+<p>Modify the Makefile to ensure that <code>export BOARD</code> is set to the target card (i.e au280 or au55c):
+   ```shell</p>
+<blockquote>
+<p>export BOARD := au280
+   ```</p>
+</blockquote>
+</li>
+<li>
+<p>Make sure to source the Vivado environment script:
+   ```shell</p>
+<blockquote>
+<p>source /tools/Xilinx/Vivado/2023.1/settings.64.sh
+   ```
+   At the time of writing this guide, 2023.1 was the version supported by the ESnet framework. Please refer to the README on the ESnet repositories.</p>
+</blockquote>
+</li>
+<li>
+<p>Run the Makefile to build the design:
+   ```shell</p>
+<blockquote>
+<p>make
+   ```</p>
+</blockquote>
+</li>
+</ol>
+<p>Upon completion, you'll find an artifact zipfile with the default pathname: <code>artifacts/&lt;BUILD_NAME&gt;/artifacts.&lt;BOARD&gt;.&lt;BUILD_NAME&gt;.0.zip</code>. This artifact zipfile contains all necessary hardware artifacts, including the bitfile, firmware driver files, regmap YAML files, the source P4 file, and any Wireshark .lua files.</p>
+<p>For more details about the <code>p4_only</code> design and simulating the P4 program, refer to the <code>examples/p4_only/README.md</code> file.</p>
+<p>You can find more information on the ESnet development workflow here: <a href="https://github.com/esnet/esnet-smartnic-hw">ESnet Development Workflow</a>.</p>
+<h3 id="building-a-new-p4-application">Building a New P4 Application</h3>
+<p>The following steps can be taken by a new user to setup a local application design directory for building
+the bitfile and artifacts for a custom P4-based SmartNIC application.</p>
+<ol>
+<li>Install the esnet-smartnic-hw respository (as described above).</li>
+</ol>
+<p>Or, alternatively, add the esnet-smartnic-hw respository to an existing git repository as a sub-module:</p>
+<pre><code>   &gt; git submodule add https://github.com/esnet/esnet-smartnic-hw.git
+</code></pre>
+<ol>
+<li>
+<p>Initialize all submodules within the esnet-smartnic-hw/ design directory:</p>
+<blockquote>
+<p>cd esnet-smartnic-hw
+git submodule update --init --recursive</p>
+</blockquote>
+</li>
+<li>
+<p>Install Vivado and configure the runtime environment (as described above).</p>
+</li>
+<li>
+<p>Return  to the local application design directory and then copy the example SmartNIC application Makefile and p4/ sub-directory into the local application design directory:</p>
+<blockquote>
+<p>cd ../
+cp esnet-smartnic-hw/examples/p4_only/Makefile ./
+cp -r esnet-smartnic-hw/examples/p4_only/p4 ./</p>
+</blockquote>
+</li>
+<li>
+<p>Using a preferred editor, edit the copied Makefile to update the SMARTNIC_DIR environment variable assignment as follows:</p>
+<p>#SMARTNIC_DIR := ../..
+   SMARTNIC_DIR := $(CURDIR)/esnet-smartnic-hw</p>
+</li>
+<li>
+<p>Copy the application p4 file to the following location and filename:</p>
+<blockquote>
+<p>cp <p4_filename> p4/<code>basename $PWD</code>.p4</p>
+</blockquote>
+<p>Note: By default, the SmartNIC scripts take the basename of the application design directory to be the name of the application, as well as its associated filenames.</p>
+</li>
+<li>
+<p>Make sure to source the Vivado environment script:
+   ```shell</p>
+<blockquote>
+<p>source /tools/Xilinx/Vivado/2023.1/settings.64.sh
+   ```
+   At the time of writing this guide, 2023.1 was the version supported by the ESnet framework. Please refer to the README on the ESnet repositories.</p>
+</blockquote>
+</li>
+<li>
+<p>Build the design by executing the copied application Makefile:</p>
+<blockquote>
+<p>make</p>
+</blockquote>
+</li>
+<li>
+<p>To simulate the P4 program, refer to the readme file provided in the p4/sim/ directory i.e. <code>p4/sim/README.md</code></p>
+</li>
+</ol>
+<h3 id="p4-programming-requirements">P4 Programming Requirements</h3>
+<p>The P4 processing core of the SmartNIC platform is implemented with the AMD (Xilinx) VitisNetP4 IP core.
+In order to meet the requirements of the VitisNetP4 IP core and the SmartNIC platform, a new P4 program should
+consider the following guidelines.</p>
+<h4 id="amd-xilinx-p4-architecture">AMD (Xilinx) P4 Architecture:</h4>
+<p>The Vitis Networking P4 compiler supports a specific pipelined datapath architecture that is comprised of 3
+customizable stages: A Parser Engine, followed by a Match-Action Engine, followed by a Deparser Engine.
+User P4 files <strong>MUST</strong> be structured to comply with this processing architecture, and specify the custom operations
+desired within each of these processing stages.</p>
+<p>More details about the AMD (Xilinx) P4 architecture can be found in the <em>Vitis Networking P4 User Guide, UG1308
+(v2023.1) May 16, 2023</em>.</p>
+<h4 id="include-files">Include files:</h4>
+<p>The P4 program <strong>MUST</strong> include the following AMD (Xilinx) VitisNetP4 include files:</p>
+<pre><code>  #include &lt;core.p4&gt;
+  #include &lt;xsa.p4&gt;
+</code></pre>
+<p>These files capture built-in constructs and the standard definitions for the AMD (Xilinx) P4 architecture.
+They are located in the Vivado installation directory at:
+<code>$XILINX_VIVADO/data/ip/xilinx/vitis_net_p4_v1_1/include/p4/</code></p>
+<h4 id="interfaces">Interfaces:</h4>
+<p>The P4 processing core supports 3 types of interfaces:</p>
+<ul>
+<li>
+<p><em>Packet Ports</em> are the primary interfaces responsible for moving packets in and out of the core, as well as
+between engines.  Engines can only contain a single input packet port and a single output packet port.</p>
+</li>
+<li>
+<p><em>Metadata Ports</em> carry sideband data related to a packet. Metadata can only correspond to a single packet
+and is processed in parallel with the packet.  More on Metadata below.</p>
+</li>
+<li>
+<p><em>Register IO Ports (axi4l)</em> are used to control the contents of the Look-up engines.</p>
+</li>
+</ul>
+<h4 id="metadata-definitions">Metadata Definitions:</h4>
+<p>The VitisNetP4 core supports both <code>Standard Metadata</code> (defined and set by the P4 core), and <code>User Metadata</code>
+(defined and set by the SmartNIC platform).  Both types of metadata can be read and/or written by the P4
+program.</p>
+<p>For more details about the <code>Standard Metadata</code> definitions, see <em>Vitis Networking P4 User Guide, UG1308
+(v2023.1) May 16, 2023</em>.</p>
+<p>In order for the compiled VitisNetP4 core to match the SmartNIC application interface, a user P4 program <strong>MUST</strong>
+define the User Metadata structure as follows:</p>
+<pre><code>struct smartnic_metadata {
+    bit&lt;64&gt; timestamp_ns;    // 64b timestamp (in nanoseconds). Set at packet arrival time.
+    bit&lt;16&gt; pid;             // 16b packet id used by platform (READ ONLY - DO NOT EDIT).
+    bit&lt;3&gt;  ingress_port;    // 3b ingress port (0:CMAC0, 1:CMAC1, 2:HOST0, 3:HOST1).
+    bit&lt;3&gt;  egress_port;     // 3b egress port  (0:CMAC0, 1:CMAC1, 2:HOST0, 3:HOST1).
+    bit&lt;1&gt;  truncate_enable; // reserved (tied to 0).
+    bit&lt;16&gt; truncate_length; // reserved (tied to 0).
+    bit&lt;1&gt;  rss_enable;      // reserved (tied to 0).
+    bit&lt;12&gt; rss_entropy;     // reserved (tied to 0).
+    bit&lt;4&gt;  drop_reason;     // reserved (tied to 0).
+    bit&lt;32&gt; scratch;         // reserved (tied to 0).
+}
+</code></pre>
+<h4 id="lookup-engines-and-externs">Lookup Engines and Externs:</h4>
+<p>In order for the compiled VitisNetP4 core to match the SmartNIC application
+interface, a user Program <strong>MUST</strong> have:</p>
+<ul>
+<li>One (or more) Look-up Engines.</li>
+<li>No HBM BCAMs.</li>
+<li>No Externs.</li>
+</ul>
+<p>Support for these features may be added in a future release.</p>
+<h3 id="the-tldr">The tl;dr</h3>
+<p>You can simply do: <code>cd examples/p4_only/p4</code> and here you can modify the p4 program. If you run <code>make</code> it will compile your P4 program into the Xilinx FPGA board model specified in <code>Makefile</code>.</p>
+<h3 id="p4-simulation-p4_only">P4 Simulation: p4_only</h3>
+<p>The p4_only example design provides the P4 source code and a behavioural simulation testcase for a simple
+P4 application core.</p>
+<p>This example follows a pure P4 design flow and does NOT include any custom verilog hardware.  As such,
+the user only provides the working P4 program file to build the custom SmartNIC hardware.</p>
+<h3 id="functional-specification">Functional Specification</h3>
+<p>The p4_only design implements a simple table-based Layer-2 packet switch.  It uses a single LPM lookup
+table that takes the Ethernet Destination MAC Address field as the key.</p>
+<p>When the lookup matches, the table returns the programmed destination port for the specified packet flow.
+The returned destination port is then written into the output metadata (<code>egress_port</code> field), which is used
+by the SmartNIC hardware for packet forwarding.</p>
+<p>When the lookup misses, the output metadata remains unchanged and the packet is forwarded to the destination
+port that was specified in the packet's input metadata (<code>egress_port</code> field).</p>
+<p>Packets with invalid and errored Ethernet headers are dropped.</p>
+<h3 id="makefile">Makefile</h3>
+<p>The execution of P4 behavioural simulations is driven by the Makefile
+in the p4/sim/ directory.</p>
+<p>This Makefile includes the variable assignments that specify how to run
+a p4 behavioural simulation, as well as the name of the p4 file and list
+of testcases that should be included in a full simulation run.</p>
+<p>Each testcase is captured in a separate subdirectory, which contains the
+input and output files for the specified test.  The testcase subdirectories
+follow the naming pattern of <code>test-&lt;NAME&gt;</code>.</p>
+<p>Prior to running a simulation, the user should update the Makefile with the
+following variable assignments (all other variable assignments can remain
+unchanged):</p>
+<pre><code> P4_SOURCE = &lt;pathname of p4 source file&gt;
+ P4BM_DIRS = &lt;testcase subdirectory list&gt;
+</code></pre>
+<p>The Makefile includes execution targets to run (or clean) a single testcase
+simulation, or simulation of the full testcase suite.</p>
+<p>To simulate a single testcase, execute make with the <code>P4BM_DIR=</code> argument
+set to the testcase subdirectory of interest.  For example:</p>
+<pre><code> &gt; make P4BM_DIR=test-fwd-p0
+</code></pre>
+<p>Or to simulate all test cases:</p>
+<pre><code> &gt; make sim-all
+</code></pre>
+<p>Note: the <code>sim-all</code> target is the default target when make is called without
+arguments.</p>
+<p>To clean all simulation output products from the p4 directory, type:</p>
+<pre><code> &gt; make clean
+</code></pre>
+<h4 id="terminal-configuration">Terminal Configuration</h4>
+<p>If you encounter the following warning when using rlwrap:</p>
+<pre><code>rlwrap: warning: your $TERM is 'xterm-256color' but rlwrap couldn't find it in the terminfo database. Expect some problems.
+</code></pre>
+<p>You can resolve this issue by adding the following line to your .profile file:</p>
+<pre><code>export TERM=xterm1
+</code></pre>
+<h3 id="testcase-input-files">Testcase Input Files</h3>
+<p>The input stimulus file set for each testcase includes three files:</p>
+<ol>
+<li>
+<p><code>cli_commands.txt</code> - Command script to set table entries and initiate input
+stimulus. Commands and syntax follow the Xilinx p4bm-vitisnet-cli.</p>
+</li>
+<li>
+<p><code>packets_in.user</code> - Input packet stream user data.  Each byte sequence terminated
+by a semicolon (;) represents a packet.  Packets are captured in sequence.  The '%'
+character is used to start comments.</p>
+<p><code>packets_in.pcap</code> - PCAP file containing the input packet stream.
+                    Alternative format to <code>packets_in.user</code> (optional).</p>
+</li>
+<li>
+<p><code>packets_in.meta</code> - Input packet metadata.  Each line corresponds
+to a packet in the input PCAP file (in sequence).  The syntax of the metadata
+is described in the Xilinx VitisnetP4 documentation.  Note: Each metadata record
+must be terminated by a semicolon (;).</p>
+</li>
+</ol>
+<p>For more details, see chapter 3 of <em>Vitis Networking P4 User Guide, UG1308 (v2023.1) May 16, 2023</em>.</p>
+<h3 id="testcase-output-files">Testcase Output Files</h3>
+<ol>
+<li><code>packets_out.user</code> - Output packet stream user data. Same syntax as input
+packet stream user data.</li>
+</ol>
+<p><code>packets_out.pcap</code> - PCAP file containing the output packet stream,
+                        if packets_in format was <code>packets_in.pcap</code>.</p>
+<ol>
+<li><code>packets_out.meta</code> - Output packet metadata.  Each line corresponds
+to a packet in the output PCAP file (in sequence).  Same syntax as input
+packet metadata.</li>
+</ol>
+<p>Note: An expected/ directory is optionally included to capture the expected
+output results of a testcase.  This expected output can be used for
+automated regression testing.</p>
+<h3 id="testcases-p4_only">Testcases: p4_only</h3>
+<p><code>test-fwd-p0</code> - The p4_only design includes a single example testcase called
+test-fwd-p0.  This testcase programs a small number of table entries that
+forward the specified packet flows to destination port 0.  The input
+stimulus includes a single packet on each flow to validate that all packets
+are forwarded to port 0.  All other packets are forwarded to the egress_port specified
+by the input meta data.</p>
+<h3 id="generating-and-simulating-the-amd-xilinx-vitisnetp4-example-design">Generating and Simulating the AMD (Xilinx) Vitisnetp4 Example Design</h3>
+<ol>
+<li>
+<p>Prior to generating the AMD (Xilinx) vitisnetp4 example design, a user must specify the p4bm test directory
+that will be imported for simulation.  This is done by assigning the full directory pathname to the
+EXAMPLE_TEST_DIR variable in the application Makefile. For example:</p>
+<p>export EXAMPLE_TEST_DIR := $(CURDIR)/p4/sim/test-fwd-p0</p>
+</li>
+</ol>
+<p>By setting the above Makefile variable, the example design will import all input stimulus, CLI programming,
+and any (optional) extern behvioural models associated with the specified simulation testcase.</p>
+<ol>
+<li>
+<p>The AMD (Xilinx) vitisnetp4 example design can be generated in the local application design directory by
+running the 'example' target of the root-level application Makefile, as follows:</p>
+<blockquote>
+<p>make example</p>
+</blockquote>
+</li>
+</ol>
+<p>Executing the above make command will generate the vitisnetp4 example design in a subdirectory
+called <code>example/sdnet_0_ex/</code>.</p>
+<ol>
+<li>
+<p>From the <code>example/sdnet_0_ex/</code> subdirectory, the AMD (Xilinx) Vivado tool can be invoked, the
+example design project can be opened, and the p4 processor can be simulated, as follows:</p>
+<blockquote>
+<p>cd example/sdnet_0_ex
+vivado</p>
+</blockquote>
+<ul>
+<li>From the <code>File-&gt;Project-&gt;Open...</code> menu, select 'sdnet_0_ex.xpr' and open the example design project.</li>
+<li>From the <code>Flow Navigator</code> menu, select 'Simulation-&gt;Run Simulation-&gt;Run Behavioural Simulation'.</li>
+</ul>
+</li>
+</ol>
+<p>For more information about how to simulate designs and evaluate results within the AMD (Xilinx) Vivado GUI,
+refer to the following document:</p>
+<ul>
+<li>
+<p><em>Vivado Design Suite User Guide - Logic Simulation, UG900 (v2023.1) May 10, 2023.</em></p>
+</li>
+<li>
+<p>Note that vitisnetp4 example design generation supports the optional instantiation of custom user extern
+function(s) by including the following design files:</p>
+</li>
+<li>
+<p>System Verilog RTL code for custom extern function(s) in the file <code>extern/rtl/smartnic_extern.sv</code>.
+  Furthermore, if a user captures extern function(s) in a design hierarchy comprised of multiple .sv files,
+  all of the .sv files located in the <code>extern/rtl</code> directory will be included in the example design project,</p>
+</li>
+<li>
+<p>C++ behavioural model(s) for custom extern function(s) in the file <code>p4/sim/user_externs/smartnic_extern.cpp</code></p>
+</li>
+</ul>
+<p>Furthermore, when simulating the vitisnetp4 example design with a user extern, the <code>smartnic_extern</code>
+instantiation is located within the <code>example_dut_wrapper</code> module (instance name <code>dut_inst/smartnic_extern_0</code>).</p>
+<h3 id="references">References</h3>
+<p>This tutorial is built on the following software/respositories along with versions/commits:</p>
+<ul>
+<li>Ubuntu 20.04 with Linux 5.4.0-153.</li>
+<li>Vivado 2023.1 with the VitisNetowrkingP4 license.</li>
+<li>The <a href="https://github.com/esnet/esnet-smartnic-hw">esnet-smartnic-hw</a> repository (commit: 9ee2cbb).</li>
+<li>The <a href="https://github.com/esnet/esnet-smartnic-fw">esnet-smartnic-fw</a> repository (commit: 180595c).</li>
+<li>The <a href="https://github.com/esnet/smartnic-dpdk-docker">smartnic-dpdk-docker</a> repository (commit: a52dba3).</li>
+<li>The <a href="https://github.com/esnet/xilinx-labtools-docker">xilinx-labtools-docker</a> repository (commit: 84cf05f).</li>
+</ul>
+<h3 id="known-issues">Known Issues</h3>
+<p>None to date. If you face any issues, please contact <a href="mailto:cs595-f2023-group@iit.edu">mailto:cs595-f2023-group@iit.edu</a></p>
+<h2 id="lesson-3-the-deployment-workflow">Lesson 3: The Deployment Workflow</h2>
+<p>Link: <strong><a href="../3-lesson3/">Lesson 3: The Deployment Workflow</a></strong></p>
+              
+            </div>
+          </div><footer>
+    <div class="rst-footer-buttons" role="navigation" aria-label="Footer Navigation">
+        <a href="../1-lesson1/" class="btn btn-neutral float-left" title="Lesson 1"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+        <a href="../3-lesson3/" class="btn btn-neutral float-right" title="Lesson 3">Next <span class="icon icon-circle-arrow-right"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+  </div>
+
+  Built with <a href="https://www.mkdocs.org/">MkDocs</a> using a <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+          
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+
+  <div class="rst-versions" role="note" aria-label="Versions">
+  <span class="rst-current-version" data-toggle="rst-current-version">
+    
+    
+      <span><a href="../1-lesson1/" style="color: #fcfcfc">&laquo; Previous</a></span>
+    
+    
+      <span><a href="../3-lesson3/" style="color: #fcfcfc">Next &raquo;</a></span>
+    
+  </span>
+</div>
+    <script src="../js/jquery-3.6.0.min.js"></script>
+    <script>var base_url = "..";</script>
+    <script src="../js/theme_extra.js"></script>
+    <script src="../js/theme.js"></script>
+      <script src="../search/main.js"></script>
+    <script>
+        jQuery(function () {
+            SphinxRtdTheme.Navigation.enable(true);
+        });
+    </script>
+
+</body>
+</html>

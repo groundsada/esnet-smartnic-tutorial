@@ -1,0 +1,357 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+      <link rel="shortcut icon" href="../img/favicon.ico" />
+    <title>Lesson 3 - The ESnet Framework</title>
+    <link rel="stylesheet" href="../css/theme.css" />
+    <link rel="stylesheet" href="../css/theme_extra.css" />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github.min.css" />
+    
+      <script>
+        // Current page data
+        var mkdocs_page_name = "Lesson 3";
+        var mkdocs_page_input_path = "3-lesson3.md";
+        var mkdocs_page_url = null;
+      </script>
+    
+    <!--[if lt IE 9]>
+      <script src="../js/html5shiv.min.js"></script>
+    <![endif]-->
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
+      <script>hljs.highlightAll();</script> 
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+    <div class="wy-side-scroll">
+      <div class="wy-side-nav-search">
+          <a href=".." class="icon icon-home"> The ESnet Framework
+        </a><div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="../search.html" method="get">
+      <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" title="Type search term here" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="..">Intro</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../1-lesson1/">Lesson 1</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../2-lesson2/">Lesson 2</a>
+                </li>
+              </ul>
+              <ul class="current">
+                <li class="toctree-l1 current"><a class="reference internal current" href="./">Lesson 3</a>
+    <ul class="current">
+    <li class="toctree-l2"><a class="reference internal" href="#setting-up-the-build-environment">Setting up the build environment</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#docker">Docker</a>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#docker-compose">Docker Compose</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#git-submodules">Git Submodules</a>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#building-a-new-firmware-image">Building a new firmware image</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#install-smartnic-hardware-build-artifact">Install Smartnic Hardware Build Artifact</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#create-smartnic-dpdk-docker-image">Create 'smartnic-dpdk-docker' Image</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#create-xilinx-labtools-docker-image">Create 'xilinx-labtools-docker' Image</a>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#building-a-new-firmware-image_1">Building a new firmware image</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#clone-the-esnet-smartnic-fw-repository">Clone the esnet-smartnic-fw repository</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#git-submodules_1">Git Submodules</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#install-smartnic-hardware-build-artifact_1">Install Smartnic Hardware Build Artifact</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#set-up-your-env-file-for-building-a-new-firmware-image">Set up your .env file for building a new firmware image</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#build-the-firmware">Build the firmware</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#configuring-the-firmware-runtime-environment">Configuring the firmware runtime environment</a>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#references">References</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#known-issues">Known Issues</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#lesson-4-running-the-deployment">Lesson 4: Running the Deployment</a>
+    </li>
+    </ul>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../4-lesson4/">Lesson 4</a>
+                </li>
+              </ul>
+      </div>
+    </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+      <nav class="wy-nav-top" role="navigation" aria-label="Mobile navigation menu">
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="..">The ESnet Framework</a>
+        
+      </nav>
+      <div class="wy-nav-content">
+        <div class="rst-content"><div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href=".." class="icon icon-home" aria-label="Docs"></a> &raquo;</li>
+      <li class="breadcrumb-item active">Lesson 3</li>
+    <li class="wy-breadcrumbs-aside">
+    </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+            <div class="section" itemprop="articleBody">
+              
+                <h1 id="lesson-3-the-deployment-workflow">Lesson 3: The Deployment Workflow</h1>
+<p>In this lesson, we will explore the deployment workflow, which involves the deployment of compiled bitfiles (zipped artifacts) onto the FPGA card. This stage results in a stack of three essential Docker images, namely: </p>
+<ol>
+<li>
+<p><strong>esnet-smartnic-fw</strong>: This Docker image is crucial for your specific bitfiles (artifacts). You will need to rebuild it each time you modify the bitfiles. It's important to note that the rebuilding process becomes significantly faster after the first time.</p>
+</li>
+<li>
+<p><strong>smartnic-dpdk-docker</strong>: This image is bitfile-independent and only needs to be built once. It serves as an essential component for interacting with the FPGA card. You can tar this image and transfer it to your runtime environment, provided that the host system where it was created matches the CPU architecture of your runtime environment. This Docker image provides the DPDK and pktgen tools.</p>
+</li>
+<li>
+<p><strong>xilinx-labtools-docker</strong>: Similar to the smartnic-dpdk-docker image, this Docker image is bitfile-independent and needs to be constructed only once. It complements the functionality of the FPGA card and is transferable to your runtime environment, given the aforementioned CPU architecture compatibility. This Docker image gives you access to Vivado Lab (no license needed). Vivado Lab is the software you'll use to load new programs onto your FPGA, so it's a crucial part of the setup.</p>
+</li>
+</ol>
+<p>It's crucial to ensure that all three Docker images, along with the corresponding configuration files, are present to effectively utilize the ESnet framework on an FPGA card. This deployment process can be replicated on multiple hosts with FPGAs as well, as long as the three containers and the sn-stack/ folder are available on the new host.</p>
+<p>Once the deployment is complete, you gain access to a powerful set of tools for your experiments:</p>
+<ul>
+<li>
+<p><strong>DPDK (Data Plane Development Kit)</strong>: DPDK is an application that enables you to bypass the kernel of the slice and connect directly to the FPGA. This allows for high-performance packet processing and efficient data plane operations.</p>
+</li>
+<li>
+<p><strong>Pktgen</strong>: Pktgen is a DPDK application that facilitates the transmission of packets to and from the FPGA SmartNIC through its 2x100 Gbps ports. It also enables communication with the slice host using the PCIe bus. Pktgen is a valuable tool for testing and analyzing network performance.</p>
+</li>
+<li>
+<p><strong>ESnet CLI Tools</strong>: These command-line tools provide control over the QDMA queues, access to probe counters for packet statistics, management of the control plane rules for your P4 logic, and remapping of egress ports to suit the requirements of your specific experiment.</p>
+</li>
+</ul>
+<h3 id="setting-up-the-build-environment">Setting up the build environment</h3>
+<p>The smartnic firmware build depends on <code>docker</code> and the <code>docker compose</code> plugin.</p>
+<h4 id="docker">Docker</h4>
+<p>Install Docker on your system following the instructions found here for the <strong>linux</strong> variant that you are using
+* https://docs.docker.com/engine/install/</p>
+<p>Ensure that you follow the post-install instructions here so that you can run docker <strong>without sudo</strong>
+* https://docs.docker.com/engine/install/linux-postinstall/</p>
+<p>Verify your docker setup by running this as an ordinary (non-root) user without using <code>sudo</code></p>
+<pre><code>docker run hello-world
+</code></pre>
+<h3 id="docker-compose">Docker Compose</h3>
+<p>The <code>docker-compose.yml</code> file for the smartnic build and the sn-stack depends on features that are only supported in the compose v2 plugin.</p>
+<p>Install the <code>docker compose</code> plugin like this for a single user:</p>
+<pre><code>mkdir -p ~/.docker/cli-plugins/
+curl -SL https://github.com/docker/compose/releases/download/v2.17.2/docker-compose-linux-x86_64 -o ~/.docker/cli-plugins/docker-compose
+chmod +x ~/.docker/cli-plugins/docker-compose
+</code></pre>
+<p>Alternatively, you can install the <code>docker compose</code> plugin system-wide like this:</p>
+<pre><code>sudo mkdir -p /usr/local/lib/docker/cli-plugins
+sudo curl  -o /usr/local/lib/docker/cli-plugins/docker-compose -SL https://github.com/docker/compose/releases/download/v2.17.2/docker-compose-linux-x86_64
+sudo chmod +x /usr/local/lib/docker/cli-plugins/docker-compose
+</code></pre>
+<p>Verify your docker compose installation by running this as an ordinary (non-root) user without using <code>sudo</code>.  For this install, the version output should be</p>
+<pre><code>$ docker compose version
+Docker Compose version v2.17.2
+</code></pre>
+<h4 id="git-submodules">Git Submodules</h4>
+<p>Ensure that all submodules have been pulled.</p>
+<pre><code>git submodule init
+git submodule update
+</code></pre>
+<h3 id="building-a-new-firmware-image">Building a new firmware image</h3>
+<h4 id="install-smartnic-hardware-build-artifact">Install Smartnic Hardware Build Artifact</h4>
+<p>The firmware build depends on the result of a smartnic hardware (FPGA) build.  This file must be available prior to invoking the firmware build.</p>
+<p>This file will be called <code>artifacts.&lt;board&gt;.&lt;app_name&gt;.0.zip</code> and should be placed in the <code>sn-hw</code> directory in your source tree before starting the firmware build.</p>
+<h4 id="create-smartnic-dpdk-docker-image">Create 'smartnic-dpdk-docker' Image</h4>
+<ul>
+<li>Clone the repository:</li>
+</ul>
+<pre><code>git clone https://github.com/esnet/smartnic-dpdk-docker.git
+</code></pre>
+<ul>
+<li>Installing git submodules</li>
+</ul>
+<pre><code>git submodule update --init --recursive
+</code></pre>
+<ul>
+<li>Building the smartnic-dpdk-docker container</li>
+</ul>
+<pre><code>docker build --pull -t smartnic-dpdk-docker:${USER}-dev .
+docker image ls
+</code></pre>
+<ul>
+<li>You should see an image called <code>smartnic-dpdk-docker</code> with tag <code>${USER}-dev</code>.</li>
+</ul>
+<p>Alternatively, you can tar this image and transfer it to your runtime environment, provided that the host system where it was created matches the CPU architecture of the environment.</p>
+<h4 id="create-xilinx-labtools-docker-image">Create 'xilinx-labtools-docker' Image</h4>
+<ul>
+<li>Clone the repository:</li>
+</ul>
+<pre><code>git clone https://github.com/esnet/xilinx-labtools-docker.git
+</code></pre>
+<ul>
+<li>Download the Xilinx Labtools Installer</li>
+<li>Open a web browser to this page: https://www.xilinx.com/support/download/index.html/content/xilinx/en/downloadNav/vivado-design-tools/2023-1.html</li>
+<li>Under the <code>Vivado Lab Solutions - 2023.1</code> section<ul>
+<li>Download <code>Vivado 2023.1: Lab Edition - Linux</code></li>
+<li>Save the file as exactly: <code>Xilinx_Vivado_Lab_Lin_2023.1_0507_1903.tar.gz</code></li>
+</ul>
+</li>
+<li>Move the file into the <code>vivado-installer</code> directory in this repo</li>
+</ul>
+<pre><code>$ tree
+.
+├── Dockerfile
+├── sources.list.focal
+└── vivado-installer
+    ├── install_config_lab.2023.1.txt
+    └── Xilinx_Vivado_Lab_Lin_2023.1_0507_1903.tar.gz   &lt;------- put the installer here
+</code></pre>
+<ul>
+<li>Building the xilinx-labtools container</li>
+</ul>
+<pre><code>docker build --pull -t xilinx-labtools-docker:${USER}-dev .
+docker image ls
+</code></pre>
+<ul>
+<li>You should see an image called <code>xilinx-labtools-docker</code> with tag <code>${USER}-dev</code>.</li>
+</ul>
+<p>Alternatively, you can tar this image and transfer it to your runtime environment, provided that the host system where it was created matches the CPU architecture of the environment.</p>
+<h3 id="building-a-new-firmware-image_1">Building a new firmware image</h3>
+<h4 id="clone-the-esnet-smartnic-fw-repository">Clone the esnet-smartnic-fw repository</h4>
+<p><code>git clone https://github.com/esnet/esnet-smartnic-fw.git</code></p>
+<h4 id="git-submodules_1">Git Submodules</h4>
+<p>Ensure that all submodules have been pulled.</p>
+<pre><code>git submodule init
+git submodule update
+</code></pre>
+<h4 id="install-smartnic-hardware-build-artifact_1">Install Smartnic Hardware Build Artifact</h4>
+<p>The firmware build depends on the result of a smartnic hardware (FPGA) build.  This file must be available prior to invoking the firmware build.</p>
+<p>This file will be called <code>artifacts.&lt;board&gt;.&lt;app_name&gt;.0.zip</code> and should be placed in the <code>sn-hw</code> directory in your source tree before starting the firmware build.</p>
+<h4 id="set-up-your-env-file-for-building-a-new-firmware-image">Set up your .env file for building a new firmware image</h4>
+<p>The <code>.env</code> file tells the build about its inputs and outputs.</p>
+<p>There is an <code>example.env</code> file in top level directory of this repo that will provide documentation and examples for the values you need to set.</p>
+<pre><code>cd $(git rev-parse --show-toplevel)
+cp example.env .env
+</code></pre>
+<p>Since the values in the .env file are used to locate the correct hardware artifact, you will need to (at least) set these values in the <code>.env</code> file to match the exact naming of the .zip file you installed in the previous step:</p>
+<pre><code>SN_HW_BOARD=&lt;board&gt;
+SN_HW_APP_NAME=&lt;app_name&gt;
+SN_HW_VER=0
+</code></pre>
+<h4 id="build-the-firmware">Build the firmware</h4>
+<p>The firmware build creates a docker container with everything needed to interact with your FPGA image.  Without any parameters, the newly built firmware container will be named/tagged <code>esnet-smartnic-fw:${USER}-dev</code> and will be available only on the local system.</p>
+<pre><code>cd $(git rev-parse --show-toplevel)
+./build.sh
+</code></pre>
+<p><strong>Optionally</strong> you can use any alternative name by specifying the full container URI as an optional parameter to the build script like this.  Using a fully specified URI here can be useful if you are planning to push the newly built container to a remote docker registry.</p>
+<pre><code>./build.sh wharf.es.net/ht/esnet-smartnic-fw:${USER}-dev
+</code></pre>
+<p>The build script also automatically customizes the <code>sn-stack/.env</code> file to refer exactly to the firmware image that you just built.</p>
+<p>The entire <code>sn-stack</code> directory will need to be transferred to the runtime system.</p>
+<pre><code>cd $(git rev-parse --show-toplevel)
+zip -r artifacts.esnet-smartnic-fw.package.0.zip sn-stack
+</code></pre>
+<h4 id="configuring-the-firmware-runtime-environment">Configuring the firmware runtime environment</h4>
+<p><strong>Optionally</strong> The firmware artifact produced by the build (see README.md at the top of this repo) should be transferred to the runtime system that hosts an FPGA card. If your runtime system that hosts an FPGA card is the same one you built the firmware artifacts on (the same one you ran build.sh on), you can skip this step entirely.</p>
+<pre><code>unzip artifacts.esnet-smartnic-fw.package.0.zip
+cd sn-stack
+# edit the .env file to provide sane values for
+#    FPGA_PCIE_DEV=0000:d8:00
+#    COMPOSE_PROFILES=smartnic-mgr-vfio-unlock
+# and IFF you have more than one JTAG you also need a line like this
+#    HW_TARGET_SERIAL=21760204S029A
+</code></pre>
+<p>Verify that the stack configuration is valid</p>
+<pre><code>docker compose config --quiet &amp;&amp; echo &quot;All good!&quot;
+</code></pre>
+<p>If this prints anything other than "All good!" then your <code>.env</code> configuration file has errors.  Do not proceed until this step passes.</p>
+<h3 id="references">References</h3>
+<p>This tutorial is built on the following software/respositories along with versions/commits:</p>
+<ul>
+<li>Ubuntu 20.04 with Linux 5.4.0-153.</li>
+<li>Vivado 2023.1 with the VitisNetowrkingP4 license.</li>
+<li>The <a href="https://github.com/esnet/esnet-smartnic-hw">esnet-smartnic-hw</a> repository (commit: 9ee2cbb).</li>
+<li>The <a href="https://github.com/esnet/esnet-smartnic-fw">esnet-smartnic-fw</a> repository (commit: 180595c).</li>
+<li>The <a href="https://github.com/esnet/smartnic-dpdk-docker">smartnic-dpdk-docker</a> repository (commit: a52dba3).</li>
+<li>The <a href="https://github.com/esnet/xilinx-labtools-docker">xilinx-labtools-docker</a> repository (commit: 84cf05f).</li>
+</ul>
+<h3 id="known-issues">Known Issues</h3>
+<p>None to date. If you face any issues, please contact <a href="mailto:cs595-f2023-group@iit.edu">mailto:cs595-f2023-group@iit.edu</a></p>
+<h2 id="lesson-4-running-the-deployment">Lesson 4: Running the Deployment</h2>
+<p>Link: <strong><a href="../4-lesson4/">Lesson 4: Running the Deployment</a></strong></p>
+              
+            </div>
+          </div><footer>
+    <div class="rst-footer-buttons" role="navigation" aria-label="Footer Navigation">
+        <a href="../2-lesson2/" class="btn btn-neutral float-left" title="Lesson 2"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+        <a href="../4-lesson4/" class="btn btn-neutral float-right" title="Lesson 4">Next <span class="icon icon-circle-arrow-right"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+  </div>
+
+  Built with <a href="https://www.mkdocs.org/">MkDocs</a> using a <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+          
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+
+  <div class="rst-versions" role="note" aria-label="Versions">
+  <span class="rst-current-version" data-toggle="rst-current-version">
+    
+    
+      <span><a href="../2-lesson2/" style="color: #fcfcfc">&laquo; Previous</a></span>
+    
+    
+      <span><a href="../4-lesson4/" style="color: #fcfcfc">Next &raquo;</a></span>
+    
+  </span>
+</div>
+    <script src="../js/jquery-3.6.0.min.js"></script>
+    <script>var base_url = "..";</script>
+    <script src="../js/theme_extra.js"></script>
+    <script src="../js/theme.js"></script>
+      <script src="../search/main.js"></script>
+    <script>
+        jQuery(function () {
+            SphinxRtdTheme.Navigation.enable(true);
+        });
+    </script>
+
+</body>
+</html>
